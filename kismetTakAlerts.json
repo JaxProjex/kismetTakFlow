@@ -1,0 +1,559 @@
+[
+    {
+        "id": "1214aeeb5f07994e",
+        "type": "tab",
+        "label": "kismetAlertsTakFlow",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "80056a321302c597",
+        "type": "http request",
+        "z": "1214aeeb5f07994e",
+        "name": "http alerts",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://10.0.0.185:2501/alerts/all_alerts.json",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "basic",
+        "senderr": false,
+        "headers": [],
+        "x": 340,
+        "y": 180,
+        "wires": [
+            [
+                "8e5ac8b2c5788936"
+            ]
+        ]
+    },
+    {
+        "id": "8f2ffa13d4058891",
+        "type": "inject",
+        "z": "1214aeeb5f07994e",
+        "name": "ping",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 200,
+        "wires": [
+            [
+                "80056a321302c597",
+                "493c66a1c144d68a"
+            ]
+        ]
+    },
+    {
+        "id": "8030df3b2694293b",
+        "type": "function",
+        "z": "1214aeeb5f07994e",
+        "name": "filter",
+        "func": "var newMsg;\nfor (var i = 0; i < msg.payload[0].length; i++) {\n    var severity = msg.payload[0][i][\"kismet.alert.severity\"]\n    var destMac = msg.payload[0][i][\"kismet.alert.dest_mac\"]\n    var srcMac = msg.payload[0][i][\"kismet.alert.source_mac\"]\n    var txMac = msg.payload[0][i][\"kismet.alert.transmitter_mac\"]\n    var header = msg.payload[0][i][\"kismet.alert.header\"]\n    var text = msg.payload[0][i][\"kismet.alert.text\"]\n    var alertHeader = msg.payload[0][i][\"kismet.alert.header\"]\n    var alertClass = msg.payload[0][i][\"kismet.alert.class\"]\n    var latPri = msg.payload[0][i][\"field.unknown.not.registered\"][\"kismet.common.location.geopoint\"][1]\n    var lonPri = msg.payload[0][i][\"field.unknown.not.registered\"][\"kismet.common.location.geopoint\"][0]\n    var latSec = msg.payload[1][\"kismet.common.location.geopoint\"][1]\n    var lonSec = msg.payload[1][\"kismet.common.location.geopoint\"][0]\n    var uid = msg.payload[0][i][\"kismet.alert.timestamp\"]\n    newMsg = { \n        payload: {\n            \"severity\": severity,\n            \"dest\": destMac,\n            \"src\": srcMac,\n            \"tx\": txMac,\n            \"alertHeader\": alertHeader,\n            \"alertClass\": alertClass,\n            \"text\": text,\n            \"latPri\": latPri,\n            \"lonPri\": lonPri,\n            \"latSec\": latSec,\n            \"lonSec\": lonSec,\n            \"uid\": uid\n        }\n    }\n    node.send(newMsg);\n}\n//return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 850,
+        "y": 180,
+        "wires": [
+            [
+                "0d62d7bfb4be0c6b",
+                "5328dbb1b1f945d0"
+            ]
+        ]
+    },
+    {
+        "id": "0d62d7bfb4be0c6b",
+        "type": "debug",
+        "z": "1214aeeb5f07994e",
+        "name": "debug filter",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 970,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "5328dbb1b1f945d0",
+        "type": "function",
+        "z": "1214aeeb5f07994e",
+        "name": "kismet json (alert)",
+        "func": "const short = 10000;\nconst cinco = 5 * 60 * 1000;\nconst diez = 2 * cinco;\nconst stale = new Date(Date.now() + diez).toISOString();\n\nvar severity = msg.payload.severity;\nvar dest = msg.payload.dest;\nvar src = msg.payload.tx;\nvar tx = msg.payload.src;\nvar alertHeader = msg.payload.alertHeader;\nvar alertClass = msg.payload.alertClass;\nvar text = msg.payload.text;\nvar latPri = msg.payload.latPri;\nvar lonPri = msg.payload.lonPri;\nvar latSec = msg.payload.latSec;\nvar lonSec = msg.payload.lonSec;\nvar uid = msg.payload.uid;\n\nvar name;\nif (severity == 20){\n    name = \"Kismet Alert Critical\";\n} else if (severity === 15){\n    name = \"Kismet Alert High\";\n} else if (severity === 10){\n    name = \"Kismet Alert Medium\";\n} else if (severity === 5){\n    name = \"Kismet Alert Low\";\n} else if (severity === 0){\n    name = \"Kismet Alert Info\";\n} else {\n    name = \"Kismet Alert\";\n}\n\nvar color;\nvar lat; \nvar lon;\nif (latPri !== 0 && lonPri !== 0){\n    lat = latPri;\n    lon = lonPri;\n} else {\n    lat = latSec;\n    lon = lonSec;\n}\nvar info = \"Kismet Alert!!! \" + alertHeader + \", \" + alertClass + \", Severity:\" + severity + \", \" + text + \", Destination MAC:\" + dest + \", Source MAC:\" + src + \", Transmitter:\" + tx;\nvar remarks = String(info);\n\nmsg.payload = {\n    \"event\": {\n        \"_attributes\": {\n            \"version\": \"2.0\",\n            \"uid\": uid,\n            \"type\": \"b-m-p-c-ip\",\n            \"how\": \"h-g-i-g-o\",\n            \"time\": new Date(Date.now()).toISOString(),\n            \"start\": new Date(Date.now()).toISOString(),\n            \"stale\": stale,\n        },\n        \"point\": {\n            \"_attributes\": {\n                \"lat\": lat,\n                \"lon\": lon,\n                \"hae\": \"0.0\",\n                \"ce\": \"9999999.0\",\n                \"le\": \"9999999.0\"\n            }\n        },\n        \"detail\": {\n            \"usericon\": {\n                \"_attributes\": {\n                    \"iconsetpath\": \"f7f71666-8b28-4b57-9fbb-e38e61d33b79/Google/caution.png\",\n                },\n            },\n            \"remarks\": {\n                \"_text\": remarks,\n            },\n            \"contact\": {\n                \"_attributes\": {\n                    \"callsign\": name,\n                }\n            },\n            \"color\": {\n                \"_attributes\": {\n                //\"argb\": \"\"+ color +\"\",\n                },\n            },\n        }\n    }\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1050,
+        "y": 180,
+        "wires": [
+            [
+                "e2e708d2cf0722f9",
+                "8dc54659c8aeddb3"
+            ]
+        ]
+    },
+    {
+        "id": "493c66a1c144d68a",
+        "type": "http request",
+        "z": "1214aeeb5f07994e",
+        "name": "http location",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://10.0.0.185:2501/gps/location.json",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "basic",
+        "senderr": false,
+        "headers": [],
+        "x": 350,
+        "y": 220,
+        "wires": [
+            [
+                "a093e8299dd7027a"
+            ]
+        ]
+    },
+    {
+        "id": "ed11e6f2b98ba642",
+        "type": "debug",
+        "z": "1214aeeb5f07994e",
+        "name": "debug join",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 770,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "8e5ac8b2c5788936",
+        "type": "join",
+        "z": "1214aeeb5f07994e",
+        "name": "",
+        "mode": "custom",
+        "build": "array",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "2",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 650,
+        "y": 180,
+        "wires": [
+            [
+                "8030df3b2694293b",
+                "ed11e6f2b98ba642"
+            ]
+        ]
+    },
+    {
+        "id": "a093e8299dd7027a",
+        "type": "delay",
+        "z": "1214aeeb5f07994e",
+        "name": "delay",
+        "pauseType": "delay",
+        "timeout": "100",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 510,
+        "y": 220,
+        "wires": [
+            [
+                "8e5ac8b2c5788936"
+            ]
+        ]
+    },
+    {
+        "id": "e2e708d2cf0722f9",
+        "type": "debug",
+        "z": "1214aeeb5f07994e",
+        "name": "debug cot1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1230,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "8dc54659c8aeddb3",
+        "type": "tak",
+        "z": "1214aeeb5f07994e",
+        "name": "TAK",
+        "x": 1310,
+        "y": 180,
+        "wires": [
+            [
+                "694e80c3ebbf5c2a",
+                "e1bbcda4bfa896d3"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "11339fde976af976",
+        "type": "tcp out",
+        "z": "1214aeeb5f07994e",
+        "name": "",
+        "host": "10.237.104.20",
+        "port": "8089",
+        "beserver": "client",
+        "base64": false,
+        "end": false,
+        "tls": "1c52b35895c06e7e",
+        "x": 1590,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "694e80c3ebbf5c2a",
+        "type": "udp out",
+        "z": "1214aeeb5f07994e",
+        "name": "",
+        "addr": "239.2.3.1",
+        "iface": "",
+        "port": "6969",
+        "ipv": "udp4",
+        "outport": "",
+        "base64": false,
+        "multicast": "multi",
+        "x": 1570,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "e1bbcda4bfa896d3",
+        "type": "debug",
+        "z": "1214aeeb5f07994e",
+        "name": "debug xml1",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1470,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "567c4afbc0045ea8",
+        "type": "websocket in",
+        "z": "1214aeeb5f07994e",
+        "name": "ws out",
+        "server": "",
+        "client": "3f871dc4f04bb293",
+        "x": 550,
+        "y": 460,
+        "wires": [
+            [
+                "0e6475f41858cf42"
+            ]
+        ]
+    },
+    {
+        "id": "67ec10ffa532da35",
+        "type": "websocket out",
+        "z": "1214aeeb5f07994e",
+        "name": "ws in",
+        "server": "",
+        "client": "3f871dc4f04bb293",
+        "x": 390,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "291661cce270b2e2",
+        "type": "inject",
+        "z": "1214aeeb5f07994e",
+        "name": "subscribe",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"SUBSCRIBE\": \"ALERT\"}",
+        "payloadType": "json",
+        "x": 200,
+        "y": 480,
+        "wires": [
+            [
+                "67ec10ffa532da35"
+            ]
+        ]
+    },
+    {
+        "id": "0e6475f41858cf42",
+        "type": "json",
+        "z": "1214aeeb5f07994e",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 830,
+        "y": 460,
+        "wires": [
+            [
+                "9af594f769b444fd",
+                "8a65fd31101c5ecc"
+            ]
+        ]
+    },
+    {
+        "id": "9af594f769b444fd",
+        "type": "debug",
+        "z": "1214aeeb5f07994e",
+        "name": "debug json2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 990,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "8a65fd31101c5ecc",
+        "type": "function",
+        "z": "1214aeeb5f07994e",
+        "name": "kismet json (alert)",
+        "func": "const short = 10000;\nconst cinco = 5 * 60 * 1000;\nconst diez = 2 * cinco;\nconst stale = new Date(Date.now() + diez).toISOString();\n\nvar severity = msg.payload.ALERT[\"kismet.alert.severity\"];\nvar dest = msg.payload.ALERT[\"kismet.alert.dest_mac\"];\nvar src = msg.payload.ALERT[\"kismet.alert.source_mac\"];\nvar tx = msg.payload.ALERT[\"kismet.alert.transmitter_mac\"];\nvar alertHeader = msg.payload.ALERT[\"kismet.alert.header\"];\nvar alertClass = msg.payload.ALERT[\"kismet.alert.class\"];\nvar text = msg.payload.ALERT[\"kismet.alert.text\"];\nvar lat = msg.payload.ALERT[\"field.unknown.not.registered\"][\"kismet.common.location.geopoint\"][1];\nvar lon = msg.payload.ALERT[\"field.unknown.not.registered\"][\"kismet.common.location.geopoint\"][0];\nvar uid = msg.payload.ALERT[\"kismet.alert.timestamp\"];\n\nvar name;\nif (severity == 20){\n    name = \"Kismet Alert Critical\";\n} else if (severity === 15){\n    name = \"Kismet Alert High\";\n} else if (severity === 10){\n    name = \"Kismet Alert Medium\";\n} else if (severity === 5){\n    name = \"Kismet Alert Low\";\n} else if (severity === 0){\n    name = \"Kismet Alert Info\";\n} else {\n    name = \"Kismet Alert\";\n}\n\nvar info = \"Kismet Alert!!! \" + alertHeader + \", \" + alertClass + \", Severity:\" + severity + \", \" + text + \", Destination MAC:\" + dest + \", Source MAC:\" + src + \", Transmitter:\" + tx;\nvar remarks = String(info);\n\nmsg.payload = {\n    \"event\": {\n        \"_attributes\": {\n            \"version\": \"2.0\",\n            \"uid\": uid,\n            \"type\": \"b-m-p-c-ip\",\n            \"how\": \"h-g-i-g-o\",\n            \"time\": new Date(Date.now()).toISOString(),\n            \"start\": new Date(Date.now()).toISOString(),\n            \"stale\": stale,\n        },\n        \"point\": {\n            \"_attributes\": {\n                \"lat\": lat,\n                \"lon\": lon,\n                \"hae\": \"0.0\",\n                \"ce\": \"9999999.0\",\n                \"le\": \"9999999.0\"\n            }\n        },\n        \"detail\": {\n            \"usericon\": {\n                \"_attributes\": {\n                    \"iconsetpath\": \"f7f71666-8b28-4b57-9fbb-e38e61d33b79/Google/caution.png\",\n                },\n            },\n            \"remarks\": {\n                \"_text\": remarks,\n            },\n            \"contact\": {\n                \"_attributes\": {\n                    \"callsign\": name,\n                }\n            },\n            \"color\": {\n                \"_attributes\": {\n                //\"argb\": \"\"+ color +\"\",\n                },\n            },\n        }\n    }\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1050,
+        "y": 460,
+        "wires": [
+            [
+                "2341db72dca3957a",
+                "cec67b05f084e766"
+            ]
+        ]
+    },
+    {
+        "id": "2341db72dca3957a",
+        "type": "debug",
+        "z": "1214aeeb5f07994e",
+        "name": "debug cot2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1250,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "8a19438d9886b5d2",
+        "type": "tcp out",
+        "z": "1214aeeb5f07994e",
+        "name": "",
+        "host": "10.237.104.20",
+        "port": "8089",
+        "beserver": "client",
+        "base64": false,
+        "end": false,
+        "tls": "1c52b35895c06e7e",
+        "x": 1570,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "73cfd536b9a86256",
+        "type": "udp out",
+        "z": "1214aeeb5f07994e",
+        "name": "",
+        "addr": "239.2.3.1",
+        "iface": "",
+        "port": "6969",
+        "ipv": "udp4",
+        "outport": "",
+        "base64": false,
+        "multicast": "multi",
+        "x": 1550,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "fcd0610e225c5452",
+        "type": "debug",
+        "z": "1214aeeb5f07994e",
+        "name": "debug xml2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1470,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "cec67b05f084e766",
+        "type": "tak",
+        "z": "1214aeeb5f07994e",
+        "name": "TAK",
+        "x": 1310,
+        "y": 460,
+        "wires": [
+            [
+                "fcd0610e225c5452",
+                "73cfd536b9a86256"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "5ce0255948dff490",
+        "type": "inject",
+        "z": "1214aeeb5f07994e",
+        "name": "unsubscribe",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"UNSUBSCRIBE\": \"ALERT\"}",
+        "payloadType": "json",
+        "x": 190,
+        "y": 540,
+        "wires": [
+            [
+                "67ec10ffa532da35"
+            ]
+        ]
+    },
+    {
+        "id": "ab32b56fe726ebea",
+        "type": "comment",
+        "z": "1214aeeb5f07994e",
+        "name": "kismetAlertTakFlow (httpReq)",
+        "info": "",
+        "x": 240,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "a5dd3eb3d814a7b2",
+        "type": "comment",
+        "z": "1214aeeb5f07994e",
+        "name": "kismetAlertTakFlow (websocket)",
+        "info": "",
+        "x": 270,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "1c52b35895c06e7e",
+        "type": "tls-config",
+        "name": "node-red to takserver",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "node-red.pem",
+        "keyname": "node-red.key",
+        "caname": "ca.pem",
+        "servername": "",
+        "verifyservercert": false,
+        "alpnprotocol": ""
+    },
+    {
+        "id": "3f871dc4f04bb293",
+        "type": "websocket-client",
+        "path": "ws://pi:raspberry@10.0.0.185:2501/eventbus/events.ws",
+        "tls": "",
+        "wholemsg": "false",
+        "hb": "0",
+        "subprotocol": ""
+    }
+]
