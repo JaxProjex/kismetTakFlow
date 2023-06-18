@@ -53,7 +53,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 170,
-        "y": 200,
+        "y": 180,
         "wires": [
             [
                 "80056a321302c597",
@@ -65,14 +65,14 @@
         "id": "8030df3b2694293b",
         "type": "function",
         "z": "1214aeeb5f07994e",
-        "name": "filter",
+        "name": "data filter",
         "func": "var newMsg;\nfor (var i = 0; i < msg.payload[0].length; i++) {\n    var severity = msg.payload[0][i][\"kismet.alert.severity\"]\n    var destMac = msg.payload[0][i][\"kismet.alert.dest_mac\"]\n    var srcMac = msg.payload[0][i][\"kismet.alert.source_mac\"]\n    var txMac = msg.payload[0][i][\"kismet.alert.transmitter_mac\"]\n    var header = msg.payload[0][i][\"kismet.alert.header\"]\n    var text = msg.payload[0][i][\"kismet.alert.text\"]\n    var alertHeader = msg.payload[0][i][\"kismet.alert.header\"]\n    var alertClass = msg.payload[0][i][\"kismet.alert.class\"]\n    var latPri = msg.payload[0][i][\"field.unknown.not.registered\"][\"kismet.common.location.geopoint\"][1]\n    var lonPri = msg.payload[0][i][\"field.unknown.not.registered\"][\"kismet.common.location.geopoint\"][0]\n    var latSec = msg.payload[1][\"kismet.common.location.geopoint\"][1]\n    var lonSec = msg.payload[1][\"kismet.common.location.geopoint\"][0]\n    var uid = msg.payload[0][i][\"kismet.alert.timestamp\"]\n    newMsg = { \n        payload: {\n            \"severity\": severity,\n            \"dest\": destMac,\n            \"src\": srcMac,\n            \"tx\": txMac,\n            \"alertHeader\": alertHeader,\n            \"alertClass\": alertClass,\n            \"text\": text,\n            \"latPri\": latPri,\n            \"lonPri\": lonPri,\n            \"latSec\": latSec,\n            \"lonSec\": lonSec,\n            \"uid\": uid\n        }\n    }\n    node.send(newMsg);\n}\n//return msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 850,
+        "x": 840,
         "y": 180,
         "wires": [
             [
@@ -85,7 +85,7 @@
         "id": "0d62d7bfb4be0c6b",
         "type": "debug",
         "z": "1214aeeb5f07994e",
-        "name": "debug filter",
+        "name": "debug filter1",
         "active": true,
         "tosidebar": true,
         "console": false,
@@ -94,7 +94,7 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 970,
+        "x": 990,
         "y": 100,
         "wires": []
     },
@@ -146,7 +146,7 @@
         "id": "ed11e6f2b98ba642",
         "type": "debug",
         "z": "1214aeeb5f07994e",
-        "name": "debug join",
+        "name": "debug join1",
         "active": true,
         "tosidebar": true,
         "console": false,
@@ -155,7 +155,7 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 770,
+        "x": 790,
         "y": 100,
         "wires": []
     },
@@ -301,8 +301,8 @@
         "name": "ws out",
         "server": "",
         "client": "3f871dc4f04bb293",
-        "x": 550,
-        "y": 460,
+        "x": 570,
+        "y": 600,
         "wires": [
             [
                 "0e6475f41858cf42"
@@ -316,15 +316,15 @@
         "name": "ws in",
         "server": "",
         "client": "3f871dc4f04bb293",
-        "x": 390,
-        "y": 480,
+        "x": 550,
+        "y": 540,
         "wires": []
     },
     {
         "id": "291661cce270b2e2",
         "type": "inject",
         "z": "1214aeeb5f07994e",
-        "name": "subscribe",
+        "name": "sub alert",
         "props": [
             {
                 "p": "payload"
@@ -341,8 +341,8 @@
         "topic": "",
         "payload": "{\"SUBSCRIBE\": \"ALERT\"}",
         "payloadType": "json",
-        "x": 200,
-        "y": 480,
+        "x": 220,
+        "y": 560,
         "wires": [
             [
                 "67ec10ffa532da35"
@@ -357,12 +357,13 @@
         "property": "payload",
         "action": "obj",
         "pretty": false,
-        "x": 830,
-        "y": 460,
+        "x": 710,
+        "y": 600,
         "wires": [
             [
-                "9af594f769b444fd",
-                "8a65fd31101c5ecc"
+                "4702808b7ce42ee4",
+                "4a4fbff5c99b5ecb",
+                "04eccc83b1067f0b"
             ]
         ]
     },
@@ -371,7 +372,7 @@
         "type": "debug",
         "z": "1214aeeb5f07994e",
         "name": "debug json2",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -379,8 +380,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 990,
-        "y": 560,
+        "x": 1010,
+        "y": 520,
         "wires": []
     },
     {
@@ -388,14 +389,14 @@
         "type": "function",
         "z": "1214aeeb5f07994e",
         "name": "kismet json (alert)",
-        "func": "const short = 10000;\nconst cinco = 5 * 60 * 1000;\nconst diez = 2 * cinco;\nconst stale = new Date(Date.now() + diez).toISOString();\n\nvar severity = msg.payload.ALERT[\"kismet.alert.severity\"];\nvar dest = msg.payload.ALERT[\"kismet.alert.dest_mac\"];\nvar src = msg.payload.ALERT[\"kismet.alert.source_mac\"];\nvar tx = msg.payload.ALERT[\"kismet.alert.transmitter_mac\"];\nvar alertHeader = msg.payload.ALERT[\"kismet.alert.header\"];\nvar alertClass = msg.payload.ALERT[\"kismet.alert.class\"];\nvar text = msg.payload.ALERT[\"kismet.alert.text\"];\nvar lat = msg.payload.ALERT[\"field.unknown.not.registered\"][\"kismet.common.location.geopoint\"][1];\nvar lon = msg.payload.ALERT[\"field.unknown.not.registered\"][\"kismet.common.location.geopoint\"][0];\nvar uid = msg.payload.ALERT[\"kismet.alert.timestamp\"];\n\nvar name;\nif (severity == 20){\n    name = \"Kismet Alert Critical\";\n} else if (severity === 15){\n    name = \"Kismet Alert High\";\n} else if (severity === 10){\n    name = \"Kismet Alert Medium\";\n} else if (severity === 5){\n    name = \"Kismet Alert Low\";\n} else if (severity === 0){\n    name = \"Kismet Alert Info\";\n} else {\n    name = \"Kismet Alert\";\n}\n\nvar info = \"Kismet Alert!!! \" + alertHeader + \", \" + alertClass + \", Severity:\" + severity + \", \" + text + \", Destination MAC:\" + dest + \", Source MAC:\" + src + \", Transmitter:\" + tx;\nvar remarks = String(info);\n\nmsg.payload = {\n    \"event\": {\n        \"_attributes\": {\n            \"version\": \"2.0\",\n            \"uid\": uid,\n            \"type\": \"b-m-p-c-ip\",\n            \"how\": \"h-g-i-g-o\",\n            \"time\": new Date(Date.now()).toISOString(),\n            \"start\": new Date(Date.now()).toISOString(),\n            \"stale\": stale,\n        },\n        \"point\": {\n            \"_attributes\": {\n                \"lat\": lat,\n                \"lon\": lon,\n                \"hae\": \"0.0\",\n                \"ce\": \"9999999.0\",\n                \"le\": \"9999999.0\"\n            }\n        },\n        \"detail\": {\n            \"usericon\": {\n                \"_attributes\": {\n                    \"iconsetpath\": \"f7f71666-8b28-4b57-9fbb-e38e61d33b79/Google/caution.png\",\n                },\n            },\n            \"remarks\": {\n                \"_text\": remarks,\n            },\n            \"contact\": {\n                \"_attributes\": {\n                    \"callsign\": name,\n                }\n            },\n            \"color\": {\n                \"_attributes\": {\n                //\"argb\": \"\"+ color +\"\",\n                },\n            },\n        }\n    }\n};\nreturn msg;",
+        "func": "const short = 10000;\nconst cinco = 5 * 60 * 1000;\nconst diez = 2 * cinco;\nconst stale = new Date(Date.now() + diez).toISOString();\n\nvar severity = msg.payload.ALERT[\"kismet.alert.severity\"];\nvar dest = msg.payload.ALERT[\"kismet.alert.dest_mac\"];\nvar src = msg.payload.ALERT[\"kismet.alert.source_mac\"];\nvar tx = msg.payload.ALERT[\"kismet.alert.transmitter_mac\"];\nvar alertHeader = msg.payload.ALERT[\"kismet.alert.header\"];\nvar alertClass = msg.payload.ALERT[\"kismet.alert.class\"];\nvar text = msg.payload.ALERT[\"kismet.alert.text\"];\nvar lat = msg.payload.ALERT[\"field.unknown.not.registered\"][\"kismet.common.location.geopoint\"][1];\nvar lon = msg.payload.ALERT[\"field.unknown.not.registered\"][\"kismet.common.location.geopoint\"][0];\nvar uid = msg.payload.ALERT[\"kismet.alert.timestamp\"];\n\nvar name;\nif (severity == 20){\n    name = \"Kismet Alert Critical\";\n} else if (severity === 15){\n    name = \"Kismet Alert High\";\n} else if (severity === 10){\n    name = \"Kismet Alert Medium\";\n} else if (severity === 5){\n    name = \"Kismet Alert Low\";\n} else if (severity === 0){\n    name = \"Kismet Alert Info\";\n} else {\n    name = \"Kismet Alert\";\n}\n\nvar info = \"Kismet Alert!!! \" + alertHeader + \", \" + alertClass + \", Severity:\" + severity + \", \" + text + \", Destination MAC:\" + dest + \", Source MAC:\" + src + \", Transmitter:\" + tx;\nvar remarks = String(info);\n\nmsg.payload = {\n    \"event\": {\n        \"_attributes\": {\n            \"version\": \"2.0\",\n            \"uid\": uid,\n            \"type\": \"b-m-p-c-ip\",\n            \"how\": \"h-g-i-g-o\",\n            \"time\": new Date(Date.now()).toISOString(),\n            \"start\": new Date(Date.now()).toISOString(),\n            \"stale\": stale,\n        },\n        \"point\": {\n            \"_attributes\": {\n                \"lat\": lat,\n                \"lon\": lon,\n                \"hae\": \"0.0\",\n                \"ce\": \"9999999.0\",\n                \"le\": \"9999999.0\"\n            }\n        },\n        \"detail\": {\n            \"usericon\": {\n                \"_attributes\": {\n                    \"iconsetpath\": \"f7f71666-8b28-4b57-9fbb-e38e61d33b79/Google/caution.png\",\n                },\n            },\n            \"remarks\": {\n                \"_text\": remarks,\n            },\n            \"contact\": {\n                \"_attributes\": {\n                    \"callsign\": name,\n                }\n            },\n            \"color\": {\n                \"_attributes\": {\n                //\"argb\": \"\"+ color +\"\",\n                },\n            },\n        }\n    }\n};\nnode.send(msg);\n//return msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
         "x": 1050,
-        "y": 460,
+        "y": 600,
         "wires": [
             [
                 "2341db72dca3957a",
@@ -417,7 +418,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 1250,
-        "y": 560,
+        "y": 520,
         "wires": []
     },
     {
@@ -431,8 +432,8 @@
         "base64": false,
         "end": false,
         "tls": "1c52b35895c06e7e",
-        "x": 1570,
-        "y": 480,
+        "x": 1810,
+        "y": 640,
         "wires": []
     },
     {
@@ -447,15 +448,15 @@
         "outport": "",
         "base64": false,
         "multicast": "multi",
-        "x": 1550,
-        "y": 420,
+        "x": 1790,
+        "y": 580,
         "wires": []
     },
     {
         "id": "fcd0610e225c5452",
         "type": "debug",
         "z": "1214aeeb5f07994e",
-        "name": "debug xml2",
+        "name": "debug xml2/3",
         "active": true,
         "tosidebar": true,
         "console": false,
@@ -464,8 +465,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1470,
-        "y": 560,
+        "x": 1720,
+        "y": 520,
         "wires": []
     },
     {
@@ -473,8 +474,8 @@
         "type": "tak",
         "z": "1214aeeb5f07994e",
         "name": "TAK",
-        "x": 1310,
-        "y": 460,
+        "x": 1550,
+        "y": 600,
         "wires": [
             [
                 "fcd0610e225c5452",
@@ -488,7 +489,7 @@
         "id": "5ce0255948dff490",
         "type": "inject",
         "z": "1214aeeb5f07994e",
-        "name": "unsubscribe",
+        "name": "unsub alert",
         "props": [
             {
                 "p": "payload"
@@ -505,8 +506,8 @@
         "topic": "",
         "payload": "{\"UNSUBSCRIBE\": \"ALERT\"}",
         "payloadType": "json",
-        "x": 190,
-        "y": 540,
+        "x": 240,
+        "y": 600,
         "wires": [
             [
                 "67ec10ffa532da35"
@@ -519,8 +520,8 @@
         "z": "1214aeeb5f07994e",
         "name": "kismetAlertTakFlow (httpReq)",
         "info": "",
-        "x": 240,
-        "y": 120,
+        "x": 380,
+        "y": 100,
         "wires": []
     },
     {
@@ -529,8 +530,338 @@
         "z": "1214aeeb5f07994e",
         "name": "kismetAlertTakFlow (websocket)",
         "info": "",
-        "x": 270,
-        "y": 400,
+        "x": 490,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "528678c6a8b33565",
+        "type": "inject",
+        "z": "1214aeeb5f07994e",
+        "name": "sub mac/ssid",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"SUBSCRIBE\": \"MESSAGE\"}",
+        "payloadType": "json",
+        "x": 170,
+        "y": 720,
+        "wires": [
+            [
+                "c9905570933b6f20"
+            ]
+        ]
+    },
+    {
+        "id": "fa8fc1e424d19964",
+        "type": "inject",
+        "z": "1214aeeb5f07994e",
+        "name": "unsub mac/ssid",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"UNSUBSCRIBE\": \"MESSAGE\"}",
+        "payloadType": "json",
+        "x": 200,
+        "y": 760,
+        "wires": [
+            [
+                "f7f1216b531d5a95"
+            ]
+        ]
+    },
+    {
+        "id": "73eb9b4266337590",
+        "type": "function",
+        "z": "1214aeeb5f07994e",
+        "name": "tgt devices",
+        "func": "//input your target MACs and SSIDs (case sensitive)\nvar tgt = [\"XFINITY\", \"xfinitywifi\", \"6B:92:1C:FD:E8:C2\", \"11:91:8C:FD:A9:C3\"];\n\n//if statement to filter targeted MACs/SSIDs\nvar scan = msg.payload.MESSAGE[\"kismet.messagebus.message_string\"];\nfor (let i = 0; i < tgt.length; i++) {;\n    if (scan.includes(tgt[i])){\n        msg.payload = {\n            \"tgt\": tgt[i],\n            \"text\": scan\n        }\n        msg.topic = 1;\n        node.send(msg);\n        }\n};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1030,
+        "y": 740,
+        "wires": [
+            [
+                "ca220a3bf037cb57"
+            ]
+        ]
+    },
+    {
+        "id": "4702808b7ce42ee4",
+        "type": "rbe",
+        "z": "1214aeeb5f07994e",
+        "name": "",
+        "func": "rbei",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload.ALERT",
+        "topi": "topic",
+        "x": 850,
+        "y": 600,
+        "wires": [
+            [
+                "8a65fd31101c5ecc",
+                "9af594f769b444fd"
+            ]
+        ]
+    },
+    {
+        "id": "4a4fbff5c99b5ecb",
+        "type": "rbe",
+        "z": "1214aeeb5f07994e",
+        "name": "",
+        "func": "rbei",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload.MESSAGE",
+        "topi": "topic",
+        "x": 870,
+        "y": 740,
+        "wires": [
+            [
+                "73eb9b4266337590"
+            ]
+        ]
+    },
+    {
+        "id": "04eccc83b1067f0b",
+        "type": "rbe",
+        "z": "1214aeeb5f07994e",
+        "name": "",
+        "func": "rbei",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload.GPS_LOCATION",
+        "topi": "topic",
+        "x": 870,
+        "y": 780,
+        "wires": [
+            [
+                "30e7b4cdf4a9b20e"
+            ]
+        ]
+    },
+    {
+        "id": "ca220a3bf037cb57",
+        "type": "join",
+        "z": "1214aeeb5f07994e",
+        "name": "",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "2",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 1190,
+        "y": 760,
+        "wires": [
+            [
+                "591a4734d54a924b",
+                "bf535f8cfd7952b9"
+            ]
+        ]
+    },
+    {
+        "id": "591a4734d54a924b",
+        "type": "debug",
+        "z": "1214aeeb5f07994e",
+        "name": "debug join3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1350,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "30e7b4cdf4a9b20e",
+        "type": "function",
+        "z": "1214aeeb5f07994e",
+        "name": "gps devices",
+        "func": "var lat = msg.payload.GPS_LOCATION[\"kismet.common.location.geopoint\"][1]\nvar lon = msg.payload.GPS_LOCATION[\"kismet.common.location.geopoint\"][0]\nvar uuid = msg.payload.GPS_LOCATION[\"kismet.common.location.time_sec\"]\nmsg.payload = {\n    \"lat\": lat,\n    \"lon\": lon,\n    \"uuid\": uuid\n};\nmsg.topic = 2;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1030,
+        "y": 780,
+        "wires": [
+            [
+                "ca220a3bf037cb57"
+            ]
+        ]
+    },
+    {
+        "id": "c9905570933b6f20",
+        "type": "trigger",
+        "z": "1214aeeb5f07994e",
+        "name": "sub gps",
+        "op1": "",
+        "op2": "{\"SUBSCRIBE\":\"GPS_LOCATION\"}",
+        "op1type": "pay",
+        "op2type": "json",
+        "duration": "500",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 360,
+        "y": 720,
+        "wires": [
+            [
+                "67ec10ffa532da35"
+            ]
+        ]
+    },
+    {
+        "id": "f7f1216b531d5a95",
+        "type": "trigger",
+        "z": "1214aeeb5f07994e",
+        "name": "unsub gps",
+        "op1": "",
+        "op2": "{\"UNSUBSCRIBE\":\"GPS_LOCATION\"}",
+        "op1type": "pay",
+        "op2type": "json",
+        "duration": "500",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 370,
+        "y": 760,
+        "wires": [
+            [
+                "67ec10ffa532da35"
+            ]
+        ]
+    },
+    {
+        "id": "bf535f8cfd7952b9",
+        "type": "function",
+        "z": "1214aeeb5f07994e",
+        "name": "kismet json (tgt)",
+        "func": "const short = 10000;\nconst cinco = 5 * 60 * 1000;\nconst diez = 10 * cinco;\nconst stale = new Date(Date.now() + diez).toISOString();\n\nvar text = msg.payload[\"1\"].text\nvar lat = msg.payload[\"2\"].lat;\nvar lon = msg.payload[\"2\"].lon;\nvar uid = msg.payload[\"2\"].uuid;\nvar tgt = msg.payload[\"1\"].tgt;\nvar name = \"tgt: \" + tgt;\nvar remarks = text;\n\nmsg.payload = {\n    \"event\": {\n        \"_attributes\": {\n            \"version\": \"2.0\",\n            \"uid\": tgt,\n            \"type\": \"a-u-G\",\n            \"how\": \"h-g-i-g-o\",\n            \"time\": new Date(Date.now()).toISOString(),\n            \"start\": new Date(Date.now()).toISOString(),\n            \"stale\": stale,\n        },\n        \"point\": {\n            \"_attributes\": {\n                \"lat\": lat,\n                \"lon\": lon,\n                \"hae\": \"0.0\",\n                \"ce\": \"9999999.0\",\n                \"le\": \"9999999.0\"\n            }\n        },\n        \"detail\": {\n            \"usericon\": {\n                \"_attributes\": {\n                    \"iconsetpath\": \"f7f71666-8b28-4b57-9fbb-e38e61d33b79/Google/red-pushpin.png\",\n                },\n            },\n            \"remarks\": {\n                \"_text\": remarks,\n            },\n            \"contact\": {\n                \"_attributes\": {\n                    \"callsign\": name,\n                }\n            },\n            \"color\": {\n                \"_attributes\": {\n                //\"argb\": \"\"+ color +\"\",\n                },\n            },\n        }\n    }\n};\nnode.send(msg);\n//return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1360,
+        "y": 760,
+        "wires": [
+            [
+                "cec67b05f084e766",
+                "77c495ed7eb9ecec"
+            ]
+        ]
+    },
+    {
+        "id": "d2e2b98b78c27c17",
+        "type": "comment",
+        "z": "1214aeeb5f07994e",
+        "name": "subscribe to alerts",
+        "info": "",
+        "x": 210,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "241bbaa6c929e219",
+        "type": "comment",
+        "z": "1214aeeb5f07994e",
+        "name": "subscribe to tgt mac/ssids",
+        "info": "",
+        "x": 170,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "77c495ed7eb9ecec",
+        "type": "debug",
+        "z": "1214aeeb5f07994e",
+        "name": "debug cot3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1570,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "6ea1421356232e26",
+        "type": "comment",
+        "z": "1214aeeb5f07994e",
+        "name": "add tgt MACs/SSIDs",
+        "info": "",
+        "x": 1030,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "59a9eba3353d5182",
+        "type": "comment",
+        "z": "1214aeeb5f07994e",
+        "name": "get all alerts",
+        "info": "",
+        "x": 150,
+        "y": 140,
         "wires": []
     },
     {
