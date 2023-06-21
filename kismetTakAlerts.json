@@ -103,7 +103,7 @@
         "type": "function",
         "z": "1214aeeb5f07994e",
         "name": "kismet json (alert)",
-        "func": "const short = 10000;\nconst cinco = 5 * 60 * 1000;\nconst diez = 2 * cinco;\nconst stale = new Date(Date.now() + diez).toISOString();\n\nvar severity = msg.payload.severity;\nvar dest = msg.payload.dest;\nvar src = msg.payload.tx;\nvar tx = msg.payload.src;\nvar alertHeader = msg.payload.alertHeader;\nvar alertClass = msg.payload.alertClass;\nvar text = msg.payload.text;\nvar latPri = msg.payload.latPri;\nvar lonPri = msg.payload.lonPri;\nvar latSec = msg.payload.latSec;\nvar lonSec = msg.payload.lonSec;\nvar uid = msg.payload.uid;\n\nvar name;\nif (severity == 20){\n    name = \"Kismet Alert Critical\";\n} else if (severity === 15){\n    name = \"Kismet Alert High\";\n} else if (severity === 10){\n    name = \"Kismet Alert Medium\";\n} else if (severity === 5){\n    name = \"Kismet Alert Low\";\n} else if (severity === 0){\n    name = \"Kismet Alert Info\";\n} else {\n    name = \"Kismet Alert\";\n}\n\nvar color;\nvar lat; \nvar lon;\nif (latPri !== 0 && lonPri !== 0){\n    lat = latPri;\n    lon = lonPri;\n} else {\n    lat = latSec;\n    lon = lonSec;\n}\nvar info = \"Kismet Alert!!! \" + alertHeader + \", \" + alertClass + \", Severity:\" + severity + \", \" + text + \", Destination MAC:\" + dest + \", Source MAC:\" + src + \", Transmitter:\" + tx;\nvar remarks = String(info);\n\nmsg.payload = {\n    \"event\": {\n        \"_attributes\": {\n            \"version\": \"2.0\",\n            \"uid\": uid,\n            \"type\": \"b-m-p-c-ip\",\n            \"how\": \"h-g-i-g-o\",\n            \"time\": new Date(Date.now()).toISOString(),\n            \"start\": new Date(Date.now()).toISOString(),\n            \"stale\": stale,\n        },\n        \"point\": {\n            \"_attributes\": {\n                \"lat\": lat,\n                \"lon\": lon,\n                \"hae\": \"0.0\",\n                \"ce\": \"9999999.0\",\n                \"le\": \"9999999.0\"\n            }\n        },\n        \"detail\": {\n            \"usericon\": {\n                \"_attributes\": {\n                    \"iconsetpath\": \"f7f71666-8b28-4b57-9fbb-e38e61d33b79/Google/caution.png\",\n                },\n            },\n            \"remarks\": {\n                \"_text\": remarks,\n            },\n            \"contact\": {\n                \"_attributes\": {\n                    \"callsign\": name,\n                }\n            },\n            \"color\": {\n                \"_attributes\": {\n                //\"argb\": \"\"+ color +\"\",\n                },\n            },\n        }\n    }\n};\nreturn msg;",
+        "func": "const short = 10000;\nconst cinco = 5 * 60 * 1000;\nconst diez = 2 * cinco;\nconst stale = new Date(Date.now() + diez).toISOString();\n\nvar severity = msg.payload.severity;\nvar dest = msg.payload.dest;\nvar src = msg.payload.tx;\nvar tx = msg.payload.src;\nvar alertHeader = msg.payload.alertHeader;\nvar alertClass = msg.payload.alertClass;\nvar text = msg.payload.text;\nvar latPri = msg.payload.latPri;\nvar lonPri = msg.payload.lonPri;\nvar latSec = msg.payload.latSec;\nvar lonSec = msg.payload.lonSec;\nvar uid = msg.payload.uid;\n\nvar name;\nif (severity == 20){\n    name = \"Kismet Alert Critical\";\n} else if (severity === 15){\n    name = \"Kismet Alert High\";\n} else if (severity === 10){\n    name = \"Kismet Alert Medium\";\n} else if (severity === 5){\n    name = \"Kismet Alert Low\";\n} else if (severity === 0){\n    name = \"Kismet Alert Info\";\n} else {\n    name = \"Kismet Alert\";\n}\n\nvar color;\nvar lat; \nvar lon;\nif (latPri !== 0 && lonPri !== 0){\n    lat = latPri;\n    lon = lonPri;\n} else {\n    lat = latSec;\n    lon = lonSec;\n}\nvar info = \"Kismet Alert!!! \" + alertHeader + \", \" + alertClass + \", Severity:\" + severity + \", \" + text + \", Destination MAC:\" + dest + \", Source MAC:\" + src + \", Transmitter:\" + tx;\nvar remarks = String(info);\n\nmsg.payload = {\n    \"event\": {\n        \"_attributes\": {\n            \"version\": \"2.0\",\n            \"uid\": uid,\n            \"type\": \"b-m-p-s-m\",\n            \"how\": \"h-g-i-g-o\",\n            \"time\": new Date(Date.now()).toISOString(),\n            \"start\": new Date(Date.now()).toISOString(),\n            \"stale\": stale,\n        },\n        \"point\": {\n            \"_attributes\": {\n                \"lat\": lat,\n                \"lon\": lon,\n                \"hae\": \"0.0\",\n                \"ce\": \"9999999.0\",\n                \"le\": \"9999999.0\"\n            }\n        },\n        \"detail\": {\n            \"usericon\": {\n                \"_attributes\": {\n                    \"iconsetpath\": \"f7f71666-8b28-4b57-9fbb-e38e61d33b79/Google/caution.png\",\n                },\n            },\n            \"remarks\": {\n                \"_text\": remarks,\n            },\n            \"contact\": {\n                \"_attributes\": {\n                    \"callsign\": name,\n                }\n            },\n            \"color\": {\n                \"_attributes\": {\n                //\"argb\": \"\"+ color +\"\",\n                },\n            },\n        }\n    }\n};\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -301,8 +301,8 @@
         "name": "ws out",
         "server": "",
         "client": "3f871dc4f04bb293",
-        "x": 570,
-        "y": 600,
+        "x": 590,
+        "y": 640,
         "wires": [
             [
                 "0e6475f41858cf42"
@@ -316,8 +316,8 @@
         "name": "ws in",
         "server": "",
         "client": "3f871dc4f04bb293",
-        "x": 550,
-        "y": 540,
+        "x": 570,
+        "y": 580,
         "wires": []
     },
     {
@@ -341,8 +341,8 @@
         "topic": "",
         "payload": "{\"SUBSCRIBE\": \"ALERT\"}",
         "payloadType": "json",
-        "x": 220,
-        "y": 560,
+        "x": 240,
+        "y": 540,
         "wires": [
             [
                 "67ec10ffa532da35"
@@ -357,8 +357,8 @@
         "property": "payload",
         "action": "obj",
         "pretty": false,
-        "x": 710,
-        "y": 600,
+        "x": 730,
+        "y": 640,
         "wires": [
             [
                 "4702808b7ce42ee4",
@@ -380,8 +380,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1010,
-        "y": 520,
+        "x": 1030,
+        "y": 560,
         "wires": []
     },
     {
@@ -389,14 +389,14 @@
         "type": "function",
         "z": "1214aeeb5f07994e",
         "name": "kismet json (alert)",
-        "func": "const short = 10000;\nconst cinco = 5 * 60 * 1000;\nconst diez = 2 * cinco;\nconst stale = new Date(Date.now() + diez).toISOString();\n\nvar severity = msg.payload.ALERT[\"kismet.alert.severity\"];\nvar dest = msg.payload.ALERT[\"kismet.alert.dest_mac\"];\nvar src = msg.payload.ALERT[\"kismet.alert.source_mac\"];\nvar tx = msg.payload.ALERT[\"kismet.alert.transmitter_mac\"];\nvar alertHeader = msg.payload.ALERT[\"kismet.alert.header\"];\nvar alertClass = msg.payload.ALERT[\"kismet.alert.class\"];\nvar text = msg.payload.ALERT[\"kismet.alert.text\"];\nvar lat = msg.payload.ALERT[\"field.unknown.not.registered\"][\"kismet.common.location.geopoint\"][1];\nvar lon = msg.payload.ALERT[\"field.unknown.not.registered\"][\"kismet.common.location.geopoint\"][0];\nvar uid = msg.payload.ALERT[\"kismet.alert.timestamp\"];\n\nvar name;\nif (severity == 20){\n    name = \"Kismet Alert Critical\";\n} else if (severity === 15){\n    name = \"Kismet Alert High\";\n} else if (severity === 10){\n    name = \"Kismet Alert Medium\";\n} else if (severity === 5){\n    name = \"Kismet Alert Low\";\n} else if (severity === 0){\n    name = \"Kismet Alert Info\";\n} else {\n    name = \"Kismet Alert\";\n}\n\nvar info = \"Kismet Alert!!! \" + alertHeader + \", \" + alertClass + \", Severity:\" + severity + \", \" + text + \", Destination MAC:\" + dest + \", Source MAC:\" + src + \", Transmitter:\" + tx;\nvar remarks = String(info);\n\nmsg.payload = {\n    \"event\": {\n        \"_attributes\": {\n            \"version\": \"2.0\",\n            \"uid\": uid,\n            \"type\": \"b-m-p-c-ip\",\n            \"how\": \"h-g-i-g-o\",\n            \"time\": new Date(Date.now()).toISOString(),\n            \"start\": new Date(Date.now()).toISOString(),\n            \"stale\": stale,\n        },\n        \"point\": {\n            \"_attributes\": {\n                \"lat\": lat,\n                \"lon\": lon,\n                \"hae\": \"0.0\",\n                \"ce\": \"9999999.0\",\n                \"le\": \"9999999.0\"\n            }\n        },\n        \"detail\": {\n            \"usericon\": {\n                \"_attributes\": {\n                    \"iconsetpath\": \"f7f71666-8b28-4b57-9fbb-e38e61d33b79/Google/caution.png\",\n                },\n            },\n            \"remarks\": {\n                \"_text\": remarks,\n            },\n            \"contact\": {\n                \"_attributes\": {\n                    \"callsign\": name,\n                }\n            },\n            \"color\": {\n                \"_attributes\": {\n                //\"argb\": \"\"+ color +\"\",\n                },\n            },\n        }\n    }\n};\nnode.send(msg);\n//return msg;",
+        "func": "const short = 10000;\nconst cinco = 5 * 60 * 1000;\nconst diez = 2 * cinco;\nconst stale = new Date(Date.now() + diez).toISOString();\n\nvar severity = msg.payload.ALERT[\"kismet.alert.severity\"];\nvar dest = msg.payload.ALERT[\"kismet.alert.dest_mac\"];\nvar src = msg.payload.ALERT[\"kismet.alert.source_mac\"];\nvar tx = msg.payload.ALERT[\"kismet.alert.transmitter_mac\"];\nvar alertHeader = msg.payload.ALERT[\"kismet.alert.header\"];\nvar alertClass = msg.payload.ALERT[\"kismet.alert.class\"];\nvar text = msg.payload.ALERT[\"kismet.alert.text\"];\nvar lat = msg.payload.ALERT[\"field.unknown.not.registered\"][\"kismet.common.location.geopoint\"][1];\nvar lon = msg.payload.ALERT[\"field.unknown.not.registered\"][\"kismet.common.location.geopoint\"][0];\nvar uid = msg.payload.ALERT[\"kismet.alert.timestamp\"];\n\nvar name;\nif (severity == 20){\n    name = \"Kismet Alert Critical\";\n} else if (severity === 15){\n    name = \"Kismet Alert High\";\n} else if (severity === 10){\n    name = \"Kismet Alert Medium\";\n} else if (severity === 5){\n    name = \"Kismet Alert Low\";\n} else if (severity === 0){\n    name = \"Kismet Alert Info\";\n} else {\n    name = \"Kismet Alert\";\n}\n\nvar info = \"Kismet Alert!!! \" + alertHeader + \", \" + alertClass + \", Severity:\" + severity + \", \" + text + \", Destination MAC:\" + dest + \", Source MAC:\" + src + \", Transmitter:\" + tx;\nvar remarks = String(info);\n\nmsg.payload = {\n    \"event\": {\n        \"_attributes\": {\n            \"version\": \"2.0\",\n            \"uid\": uid,\n            \"type\": \"b-m-p-s-m\",\n            \"how\": \"h-g-i-g-o\",\n            \"time\": new Date(Date.now()).toISOString(),\n            \"start\": new Date(Date.now()).toISOString(),\n            \"stale\": stale,\n        },\n        \"point\": {\n            \"_attributes\": {\n                \"lat\": lat,\n                \"lon\": lon,\n                \"hae\": \"0.0\",\n                \"ce\": \"9999999.0\",\n                \"le\": \"9999999.0\"\n            }\n        },\n        \"detail\": {\n            \"usericon\": {\n                \"_attributes\": {\n                    \"iconsetpath\": \"f7f71666-8b28-4b57-9fbb-e38e61d33b79/Google/caution.png\",\n                },\n            },\n            \"remarks\": {\n                \"_text\": remarks,\n            },\n            \"contact\": {\n                \"_attributes\": {\n                    \"callsign\": name,\n                }\n            },\n            \"color\": {\n                \"_attributes\": {\n                //\"argb\": \"\"+ color +\"\",\n                },\n            },\n        }\n    }\n};\nnode.send(msg);\n//return msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1050,
-        "y": 600,
+        "x": 1070,
+        "y": 640,
         "wires": [
             [
                 "2341db72dca3957a",
@@ -417,8 +417,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1250,
-        "y": 520,
+        "x": 1270,
+        "y": 560,
         "wires": []
     },
     {
@@ -432,8 +432,8 @@
         "base64": false,
         "end": false,
         "tls": "1c52b35895c06e7e",
-        "x": 1810,
-        "y": 640,
+        "x": 1830,
+        "y": 680,
         "wires": []
     },
     {
@@ -448,8 +448,8 @@
         "outport": "",
         "base64": false,
         "multicast": "multi",
-        "x": 1790,
-        "y": 580,
+        "x": 1810,
+        "y": 620,
         "wires": []
     },
     {
@@ -465,8 +465,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1720,
-        "y": 520,
+        "x": 1740,
+        "y": 560,
         "wires": []
     },
     {
@@ -474,8 +474,8 @@
         "type": "tak",
         "z": "1214aeeb5f07994e",
         "name": "TAK",
-        "x": 1550,
-        "y": 600,
+        "x": 1570,
+        "y": 640,
         "wires": [
             [
                 "fcd0610e225c5452",
@@ -507,7 +507,7 @@
         "payload": "{\"UNSUBSCRIBE\": \"ALERT\"}",
         "payloadType": "json",
         "x": 240,
-        "y": 600,
+        "y": 580,
         "wires": [
             [
                 "67ec10ffa532da35"
@@ -518,20 +518,10 @@
         "id": "ab32b56fe726ebea",
         "type": "comment",
         "z": "1214aeeb5f07994e",
-        "name": "kismetAlertTakFlow (httpReq)",
-        "info": "",
-        "x": 380,
-        "y": 100,
-        "wires": []
-    },
-    {
-        "id": "a5dd3eb3d814a7b2",
-        "type": "comment",
-        "z": "1214aeeb5f07994e",
-        "name": "kismetAlertTakFlow (websocket)",
-        "info": "",
-        "x": 490,
-        "y": 460,
+        "name": "README",
+        "info": "REQUIREMENTS:\n\n-Node-Red\n\n-node-red-contrib-tak https://github.com/snstac/node-red-contrib-tak\n\n-TAKServer (or Multicast supported devices)\n\n-Kismet Server (actively running with GPS and WiFi Card)\n\nSETUP NODE-RED:\n\n-https://nodered.org/docs/getting-started/\n\n-options include installing node-red on your local PC, a Raspberry Pi or similar single board computer or mini PC, deploying node-red on a cloud server or virtual private server (VPS), Docker Container, or local virtual environment. After installing node-red you should be able to go to the node-red dashboard at http://*nodeRedIPaddress:1880 you may have to open appropriate ports (1880) to allow devices to access the node-red dashboard.\n\n-ensure you install the \"node-red-contrib-tak\" node. If not there should be a prompt when you import wigleTakFlow in Node-Red that there are nodes that need to be installed and will automatically install them for you if you allow. In the event that isnt the case, in Node-Red: Menu (3 horizontal lines) > Manage palette > Install > Search \"node-red-contrib-tak\" > Install > Install\n\nIMPORT .JSON FLOW TO NODE RED:\n\n-in GitHub: click on \"kismetTakAlerts.json\" > click on the download icon \"Download raw file\" > note where the \"kismetTakAlerts.json\" file downloaded to, default is in your Downloads folder.\n\n-in Node-Red: click on menu icon (3 horizontal lines top right) > click on \"Import\" > click on \"select a file to import\" > go to Downloads folder and click on \"kismetTakAlerts.json\" > Upload > Import\n\nALTERNATIVELY..\n\n-you can just copy the whole \"kismetTakAlerts.json\" code from GitHub and paste it into the Node-Red Import Clipboard.\n\nCONFIGURE TAKSERVER:\n\n-TAKServer can be hosted on various platforms: Raspberry Pi, Mini PCs, your local PC, Cloud Servers or Virtual Private Servers (VPS), Docker Containers, or Virtual Environments. Regardless, if you're looking for instructions on setting up your TAKServer I recommend ATAKHQs guides https://www.atakhq.com/en/tak-server.\n\n-Configuring the TCP (TAKServer) node in Node-Red kismetTakAlerts, Input your TAKServer IP and Port, and checkbox whether you're using SSL/TLS or not. If you are using SSL/TLS, ensure you upload you TAKServer certificates and key that are located in the directory of your TAKServer that stores all client certificates/keys (ie: ubuntu docker container is \"/opt/tak/certs/files\"). I Suggest creating a TAK client \"node-red\" to be used specifically for Node-Reds handling of forwarding data to TAK. In your certificates file you will want to copy and upload \"node-red.pem\" as the \"Certificate\", \"node-red.key\" as the \"Private Key\" and \"ca.pem\" as the \"CA Certificate\" in the TLS Configuration Properties in the TCP (TAKServer) node in Node-Red. You will also need to enter the Passphrase for your TAKServer truststore, this can be found in your TAKServers CoreConfig.xml file. Default is \"atakatak\".\n\nCONFIGURE PING NODE:\n\n-in Node-Red: configure ping node \"repeat\" > \"interval\" and set the frequency of how often the kismet alerts are requested and then forwarded to TAK. The http GET request flow should just be used to get alerts that were missed before subscribing to kismet with websocket (eventbus)\n\nCONFIGURE BOTH HTTP NODES:\n\n-in Node-Red: input your kismet device IP address and port (default port is 2501)\n\nCONFIGURE BOTH WS (IN/OUT) NODES:\n\n-in Node-Red: input your login credentials for kismet device followed by IP address and port (default port is 2501). ie: ws://username:password@kismetipaddress:2501\n\nCONFIGURE TGT DEVICES:\n\n-in Node-Red: input your target MACs and SSIDs in the tgt devices node. Ensure to follow the format of how its written JUST.. LIKE.. THE.. EXAMPLE.\n\nUSING THE KISMETTAKALERTS:\n\n-short answer: make sure kismets UI is actively running and just click \"sub alert\" in the flow.\n\n-once your TCP TAKServer node is connected, your http nodes are configured, and your ws nodes are configured, you're ready to start having node-red listen in for kismet alerts to popup and get forwarded to TAK. Open ATAK/iTAK and test to make sure you're receiving CoT either from multicast or the TAKServer.\n\n-ping node repeat/intervals aren't necessary for this flow since the ws node (websocket/eventbus) will automatically send CoT to TAK once alerts (or tgt devices) are detected from kismet in realtime. The http GET request flow is mostly just to catch any alibi alerts missed that are still stored in kismet. Feel free to have it default ping every few minutes if you feel its necessary as a failsafe to not have missed alerts.\n\n-Begin by clicking the sub alerts node to have node red wait for kismet alerts to get forwarded to TAK. Click the sub mac/ssid node to have node red populate a CoT to TAK once targeted SSIDs or MACs are detected by kismet.\n\n-creating a list of targeted SSIDs and MACs can be done in the tgt devices node.\n\n-to stop data flow from websocket/eventbus, use the unsub node.\n\nHOW THE KISMETTAKALERTS WORKS:\n\n-the top flow sends an http GET request to kismets web api that pulls all alerts that kismet has stored from the current active scan but repackages it up into CoT to push to TAKServer or multicast for TAK devices to view.\n\n-the bottom flow is subscribing to certain topics of kismets websocket eventbus (alerts and/or scan messages to detect if targeted devices are present) so when something is detected it will send the data and be repackaged as a CoT in realtime to be pushed to TAKServer or multicast.\n\nTROUBLESHOOTING / KNOWN ISSUES:\n\n-in the event the Node-Red service explodes and you lose connection to the Node-Red UI and cant reconnect, you may need to restart your Node-Red service\n\n$ sudo service node-red restart",
+        "x": 400,
+        "y": 360,
         "wires": []
     },
     {
@@ -555,8 +545,8 @@
         "topic": "",
         "payload": "{\"SUBSCRIBE\": \"MESSAGE\"}",
         "payloadType": "json",
-        "x": 170,
-        "y": 720,
+        "x": 190,
+        "y": 760,
         "wires": [
             [
                 "c9905570933b6f20"
@@ -584,8 +574,8 @@
         "topic": "",
         "payload": "{\"UNSUBSCRIBE\": \"MESSAGE\"}",
         "payloadType": "json",
-        "x": 200,
-        "y": 760,
+        "x": 220,
+        "y": 800,
         "wires": [
             [
                 "f7f1216b531d5a95"
@@ -597,14 +587,14 @@
         "type": "function",
         "z": "1214aeeb5f07994e",
         "name": "tgt devices",
-        "func": "//input your target MACs and SSIDs (case sensitive)\nvar tgt = [\"XFINITY\", \"xfinitywifi\", \"6B:92:1C:FD:E8:C2\", \"11:91:8C:FD:A9:C3\"];\n\n//if statement to filter targeted MACs/SSIDs\nvar scan = msg.payload.MESSAGE[\"kismet.messagebus.message_string\"];\nfor (let i = 0; i < tgt.length; i++) {;\n    if (scan.includes(tgt[i])){\n        msg.payload = {\n            \"tgt\": tgt[i],\n            \"text\": scan\n        }\n        msg.topic = 1;\n        node.send(msg);\n        }\n};",
+        "func": "//input your target MACs and SSIDs (case sensitive, follow the same format as the examples)\nvar tgt = [\"XFINITY\", \"xfinitywifi\", \"6B:92:1C:FD:E8:C2\", \"11:91:8C:FD:A9:C3\"];\n\n//if statement to filter targeted MACs/SSIDs\nvar scan = msg.payload.MESSAGE[\"kismet.messagebus.message_string\"];\nfor (let i = 0; i < tgt.length; i++) {;\n    if (scan.includes(tgt[i])){\n        msg.payload = {\n            \"tgt\": tgt[i],\n            \"text\": scan\n        }\n        msg.topic = 1;\n        node.send(msg);\n        }\n};",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1030,
-        "y": 740,
+        "x": 1050,
+        "y": 780,
         "wires": [
             [
                 "ca220a3bf037cb57"
@@ -623,8 +613,8 @@
         "septopics": false,
         "property": "payload.ALERT",
         "topi": "topic",
-        "x": 850,
-        "y": 600,
+        "x": 870,
+        "y": 640,
         "wires": [
             [
                 "8a65fd31101c5ecc",
@@ -644,8 +634,8 @@
         "septopics": false,
         "property": "payload.MESSAGE",
         "topi": "topic",
-        "x": 870,
-        "y": 740,
+        "x": 890,
+        "y": 780,
         "wires": [
             [
                 "73eb9b4266337590"
@@ -664,8 +654,8 @@
         "septopics": false,
         "property": "payload.GPS_LOCATION",
         "topi": "topic",
-        "x": 870,
-        "y": 780,
+        "x": 890,
+        "y": 820,
         "wires": [
             [
                 "30e7b4cdf4a9b20e"
@@ -692,8 +682,8 @@
         "reduceInit": "",
         "reduceInitType": "",
         "reduceFixup": "",
-        "x": 1190,
-        "y": 760,
+        "x": 1210,
+        "y": 800,
         "wires": [
             [
                 "591a4734d54a924b",
@@ -714,8 +704,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1350,
-        "y": 840,
+        "x": 1370,
+        "y": 880,
         "wires": []
     },
     {
@@ -729,8 +719,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1030,
-        "y": 780,
+        "x": 1050,
+        "y": 820,
         "wires": [
             [
                 "ca220a3bf037cb57"
@@ -754,8 +744,8 @@
         "bytopic": "all",
         "topic": "topic",
         "outputs": 1,
-        "x": 360,
-        "y": 720,
+        "x": 380,
+        "y": 760,
         "wires": [
             [
                 "67ec10ffa532da35"
@@ -779,8 +769,8 @@
         "bytopic": "all",
         "topic": "topic",
         "outputs": 1,
-        "x": 370,
-        "y": 760,
+        "x": 390,
+        "y": 800,
         "wires": [
             [
                 "67ec10ffa532da35"
@@ -798,8 +788,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1360,
-        "y": 760,
+        "x": 1380,
+        "y": 800,
         "wires": [
             [
                 "cec67b05f084e766",
@@ -811,10 +801,10 @@
         "id": "d2e2b98b78c27c17",
         "type": "comment",
         "z": "1214aeeb5f07994e",
-        "name": "subscribe to alerts",
-        "info": "",
-        "x": 210,
-        "y": 520,
+        "name": "subscribe to alerts (USE THIS ONE)",
+        "info": "will immediately plot a CoT to ATAK if alerts are subscribed to and are detected",
+        "x": 240,
+        "y": 620,
         "wires": []
     },
     {
@@ -822,9 +812,9 @@
         "type": "comment",
         "z": "1214aeeb5f07994e",
         "name": "subscribe to tgt mac/ssids",
-        "info": "",
-        "x": 170,
-        "y": 680,
+        "info": "will immediately plot a CoT to ATAK if mac/ssid are subscribed to and are detected, add in tgt SSIDs and MACs in tgt devices node",
+        "x": 290,
+        "y": 840,
         "wires": []
     },
     {
@@ -840,27 +830,67 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1570,
-        "y": 840,
+        "x": 1590,
+        "y": 880,
         "wires": []
     },
     {
         "id": "6ea1421356232e26",
         "type": "comment",
         "z": "1214aeeb5f07994e",
-        "name": "add tgt MACs/SSIDs",
-        "info": "",
-        "x": 1030,
-        "y": 700,
+        "name": "configure tgt devices",
+        "info": "in tgt devices node in \"var tgt = \" add in your SSIDs and MAC addresses formatted the same as the example provided.",
+        "x": 1060,
+        "y": 740,
         "wires": []
     },
     {
         "id": "59a9eba3353d5182",
         "type": "comment",
         "z": "1214aeeb5f07994e",
-        "name": "get all alerts",
-        "info": "",
-        "x": 150,
+        "name": "config ping",
+        "info": "configure ping node and scroll down to repeat and set to interval and input how often you want to update to CoTs to TAK.\nthis ping node will start the flow to send to TAK as CoT all alerts in the event you subscribed to alerts after having had recieved alerts previously.",
+        "x": 140,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "67257e80790cf3a6",
+        "type": "comment",
+        "z": "1214aeeb5f07994e",
+        "name": "configure TCP (TAKServer)",
+        "info": "if using SSL/TLS ensure you upload your certificates, key and input your passphrase.\nCertificates (.pem) and key (.key) can be found in your TAKServers directory where it stores all TAK client certificates.\nDefualt SSL/TLS port is 8089.\n",
+        "x": 1630,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "fc5a026ffd997b34",
+        "type": "comment",
+        "z": "1214aeeb5f07994e",
+        "name": "configure TCP (TAKServer)",
+        "info": "if using SSL/TLS ensure you upload your certificates, key and input your passphrase.\nCertificates (.pem) and key (.key) can be found in your TAKServers directory where it stores all TAK client certificates.\nDefualt SSL/TLS port is 8089.\n",
+        "x": 1870,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "e33033b31df79e9e",
+        "type": "comment",
+        "z": "1214aeeb5f07994e",
+        "name": "configure both ws",
+        "info": "input kismet device ip addres and username and password login for kismet UI. formatted as ws://username:password@kismetipaddress:2501",
+        "x": 590,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "060ee2f0300820e7",
+        "type": "comment",
+        "z": "1214aeeb5f07994e",
+        "name": "configure both http",
+        "info": "input ip of kismet device into both http nodes",
+        "x": 370,
         "y": 140,
         "wires": []
     },
