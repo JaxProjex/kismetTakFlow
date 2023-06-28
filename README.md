@@ -3,7 +3,7 @@ Node-Red Flow to forward Kismet Alerts (as CoT icon) to ATAK via multicast or TA
 
 ![flow](/kismetTakAlerts.png?raw=true "Node Red Flow")
 
-![flow](/kismeAlertsATAK.png?raw=true "ATAK Alerts")
+![flow](/kismetAlertsATAK.png?raw=true "ATAK Alerts")
 
 ![flow](/kismetTargetsATAK.png?raw=true "ATAK Targets")
 
