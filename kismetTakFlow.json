@@ -2,7 +2,7 @@
     {
         "id": "1214aeeb5f07994e",
         "type": "tab",
-        "label": "kismetAlertsTakFlow",
+        "label": "kismetTakFlow",
         "disabled": false,
         "info": "",
         "env": []
@@ -23,7 +23,7 @@
         "authType": "basic",
         "senderr": false,
         "headers": [],
-        "x": 340,
+        "x": 460,
         "y": 180,
         "wires": [
             [
@@ -52,8 +52,8 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 170,
-        "y": 180,
+        "x": 290,
+        "y": 160,
         "wires": [
             [
                 "80056a321302c597",
@@ -72,7 +72,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 840,
+        "x": 960,
         "y": 180,
         "wires": [
             [
@@ -86,7 +86,7 @@
         "type": "debug",
         "z": "1214aeeb5f07994e",
         "name": "debug filter1",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -94,7 +94,7 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 990,
+        "x": 1110,
         "y": 100,
         "wires": []
     },
@@ -109,12 +109,12 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1050,
+        "x": 1170,
         "y": 180,
         "wires": [
             [
                 "e2e708d2cf0722f9",
-                "8dc54659c8aeddb3"
+                "cec67b05f084e766"
             ]
         ]
     },
@@ -134,7 +134,7 @@
         "authType": "basic",
         "senderr": false,
         "headers": [],
-        "x": 350,
+        "x": 470,
         "y": 220,
         "wires": [
             [
@@ -147,7 +147,7 @@
         "type": "debug",
         "z": "1214aeeb5f07994e",
         "name": "debug join1",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -155,7 +155,7 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 790,
+        "x": 910,
         "y": 100,
         "wires": []
     },
@@ -179,7 +179,7 @@
         "reduceInit": "",
         "reduceInitType": "",
         "reduceFixup": "",
-        "x": 650,
+        "x": 770,
         "y": 180,
         "wires": [
             [
@@ -205,7 +205,7 @@
         "drop": false,
         "allowrate": false,
         "outputs": 1,
-        "x": 510,
+        "x": 630,
         "y": 220,
         "wires": [
             [
@@ -226,71 +226,7 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1230,
-        "y": 100,
-        "wires": []
-    },
-    {
-        "id": "8dc54659c8aeddb3",
-        "type": "tak",
-        "z": "1214aeeb5f07994e",
-        "name": "TAK",
-        "x": 1310,
-        "y": 180,
-        "wires": [
-            [
-                "694e80c3ebbf5c2a",
-                "e1bbcda4bfa896d3"
-            ],
-            [],
-            []
-        ]
-    },
-    {
-        "id": "11339fde976af976",
-        "type": "tcp out",
-        "z": "1214aeeb5f07994e",
-        "name": "",
-        "host": "10.237.104.20",
-        "port": "8089",
-        "beserver": "client",
-        "base64": false,
-        "end": false,
-        "tls": "1c52b35895c06e7e",
-        "x": 1590,
-        "y": 220,
-        "wires": []
-    },
-    {
-        "id": "694e80c3ebbf5c2a",
-        "type": "udp out",
-        "z": "1214aeeb5f07994e",
-        "name": "",
-        "addr": "239.2.3.1",
-        "iface": "",
-        "port": "6969",
-        "ipv": "udp4",
-        "outport": "",
-        "base64": false,
-        "multicast": "multi",
-        "x": 1570,
-        "y": 160,
-        "wires": []
-    },
-    {
-        "id": "e1bbcda4bfa896d3",
-        "type": "debug",
-        "z": "1214aeeb5f07994e",
-        "name": "debug xml1",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1470,
+        "x": 1350,
         "y": 100,
         "wires": []
     },
@@ -301,8 +237,8 @@
         "name": "ws out",
         "server": "",
         "client": "3f871dc4f04bb293",
-        "x": 590,
-        "y": 640,
+        "x": 570,
+        "y": 1020,
         "wires": [
             [
                 "0e6475f41858cf42"
@@ -317,7 +253,7 @@
         "server": "",
         "client": "3f871dc4f04bb293",
         "x": 570,
-        "y": 580,
+        "y": 960,
         "wires": []
     },
     {
@@ -341,8 +277,8 @@
         "topic": "",
         "payload": "{\"SUBSCRIBE\": \"ALERT\"}",
         "payloadType": "json",
-        "x": 240,
-        "y": 540,
+        "x": 160,
+        "y": 900,
         "wires": [
             [
                 "67ec10ffa532da35"
@@ -358,7 +294,7 @@
         "action": "obj",
         "pretty": false,
         "x": 730,
-        "y": 640,
+        "y": 1020,
         "wires": [
             [
                 "4702808b7ce42ee4",
@@ -371,7 +307,7 @@
         "id": "9af594f769b444fd",
         "type": "debug",
         "z": "1214aeeb5f07994e",
-        "name": "debug json2",
+        "name": "debug json3",
         "active": false,
         "tosidebar": true,
         "console": false,
@@ -381,7 +317,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 1030,
-        "y": 560,
+        "y": 940,
         "wires": []
     },
     {
@@ -396,7 +332,7 @@
         "finalize": "",
         "libs": [],
         "x": 1070,
-        "y": 640,
+        "y": 1020,
         "wires": [
             [
                 "2341db72dca3957a",
@@ -408,7 +344,7 @@
         "id": "2341db72dca3957a",
         "type": "debug",
         "z": "1214aeeb5f07994e",
-        "name": "debug cot2",
+        "name": "debug cot3",
         "active": true,
         "tosidebar": true,
         "console": false,
@@ -418,7 +354,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 1270,
-        "y": 560,
+        "y": 940,
         "wires": []
     },
     {
@@ -432,8 +368,8 @@
         "base64": false,
         "end": false,
         "tls": "1c52b35895c06e7e",
-        "x": 1830,
-        "y": 680,
+        "x": 2270,
+        "y": 1080,
         "wires": []
     },
     {
@@ -448,15 +384,15 @@
         "outport": "",
         "base64": false,
         "multicast": "multi",
-        "x": 1810,
-        "y": 620,
+        "x": 2250,
+        "y": 1000,
         "wires": []
     },
     {
         "id": "fcd0610e225c5452",
         "type": "debug",
         "z": "1214aeeb5f07994e",
-        "name": "debug xml2/3",
+        "name": "debug tak",
         "active": true,
         "tosidebar": true,
         "console": false,
@@ -465,8 +401,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1740,
-        "y": 560,
+        "x": 2220,
+        "y": 900,
         "wires": []
     },
     {
@@ -474,8 +410,8 @@
         "type": "tak",
         "z": "1214aeeb5f07994e",
         "name": "TAK",
-        "x": 1570,
-        "y": 640,
+        "x": 1870,
+        "y": 1060,
         "wires": [
             [
                 "fcd0610e225c5452",
@@ -506,8 +442,8 @@
         "topic": "",
         "payload": "{\"UNSUBSCRIBE\": \"ALERT\"}",
         "payloadType": "json",
-        "x": 240,
-        "y": 580,
+        "x": 180,
+        "y": 940,
         "wires": [
             [
                 "67ec10ffa532da35"
@@ -520,8 +456,8 @@
         "z": "1214aeeb5f07994e",
         "name": "README",
         "info": "REQUIREMENTS:\n\n-Node-Red\n\n-node-red-contrib-tak https://github.com/snstac/node-red-contrib-tak\n\n-TAKServer (or Multicast supported devices)\n\n-Kismet Server (actively running with GPS and WiFi Card)\n\nSETUP NODE-RED:\n\n-https://nodered.org/docs/getting-started/\n\n-options include installing node-red on your local PC, a Raspberry Pi or similar single board computer or mini PC, deploying node-red on a cloud server or virtual private server (VPS), Docker Container, or local virtual environment. After installing node-red you should be able to go to the node-red dashboard at http://*nodeRedIPaddress:1880 you may have to open appropriate ports (1880) to allow devices to access the node-red dashboard.\n\n-ensure you install the \"node-red-contrib-tak\" node. If not there should be a prompt when you import wigleTakFlow in Node-Red that there are nodes that need to be installed and will automatically install them for you if you allow. In the event that isnt the case, in Node-Red: Menu (3 horizontal lines) > Manage palette > Install > Search \"node-red-contrib-tak\" > Install > Install\n\nIMPORT .JSON FLOW TO NODE RED:\n\n-in GitHub: click on \"kismetTakAlerts.json\" > click on the download icon \"Download raw file\" > note where the \"kismetTakAlerts.json\" file downloaded to, default is in your Downloads folder.\n\n-in Node-Red: click on menu icon (3 horizontal lines top right) > click on \"Import\" > click on \"select a file to import\" > go to Downloads folder and click on \"kismetTakAlerts.json\" > Upload > Import\n\nALTERNATIVELY..\n\n-you can just copy the whole \"kismetTakAlerts.json\" code from GitHub and paste it into the Node-Red Import Clipboard.\n\nCONFIGURE TAKSERVER:\n\n-TAKServer can be hosted on various platforms: Raspberry Pi, Mini PCs, your local PC, Cloud Servers or Virtual Private Servers (VPS), Docker Containers, or Virtual Environments. Regardless, if you're looking for instructions on setting up your TAKServer I recommend ATAKHQs guides https://www.atakhq.com/en/tak-server.\n\n-Configuring the TCP (TAKServer) node in Node-Red kismetTakAlerts, Input your TAKServer IP and Port, and checkbox whether you're using SSL/TLS or not. If you are using SSL/TLS, ensure you upload you TAKServer certificates and key that are located in the directory of your TAKServer that stores all client certificates/keys (ie: ubuntu docker container is \"/opt/tak/certs/files\"). I Suggest creating a TAK client \"node-red\" to be used specifically for Node-Reds handling of forwarding data to TAK. In your certificates file you will want to copy and upload \"node-red.pem\" as the \"Certificate\", \"node-red.key\" as the \"Private Key\" and \"ca.pem\" as the \"CA Certificate\" in the TLS Configuration Properties in the TCP (TAKServer) node in Node-Red. You will also need to enter the Passphrase for your TAKServer truststore, this can be found in your TAKServers CoreConfig.xml file. Default is \"atakatak\".\n\nCONFIGURE PING NODE:\n\n-in Node-Red: configure ping node \"repeat\" > \"interval\" and set the frequency of how often the kismet alerts are requested and then forwarded to TAK. The http GET request flow should just be used to get alerts that were missed before subscribing to kismet with websocket (eventbus)\n\nCONFIGURE BOTH HTTP NODES:\n\n-in Node-Red: input your kismet device IP address and port (default port is 2501)\n\nCONFIGURE BOTH WS (IN/OUT) NODES:\n\n-in Node-Red: input your login credentials for kismet device followed by IP address and port (default port is 2501). ie: ws://username:password@kismetipaddress:2501\n\nCONFIGURE TGT DEVICES:\n\n-in Node-Red: input your target MACs and SSIDs in the tgt devices node. Ensure to follow the format of how its written JUST.. LIKE.. THE.. EXAMPLE.\n\nUSING THE KISMETTAKALERTS:\n\n-short answer: make sure kismets UI is actively running and just click \"sub alert\" in the flow.\n\n-once your TCP TAKServer node is connected, your http nodes are configured, and your ws nodes are configured, you're ready to start having node-red listen in for kismet alerts to popup and get forwarded to TAK. Open ATAK/iTAK and test to make sure you're receiving CoT either from multicast or the TAKServer.\n\n-ping node repeat/intervals aren't necessary for this flow since the ws node (websocket/eventbus) will automatically send CoT to TAK once alerts (or tgt devices) are detected from kismet in realtime. The http GET request flow is mostly just to catch any alibi alerts missed that are still stored in kismet. Feel free to have it default ping every few minutes if you feel its necessary as a failsafe to not have missed alerts.\n\n-Begin by clicking the sub alerts node to have node red wait for kismet alerts to get forwarded to TAK. Click the sub mac/ssid node to have node red populate a CoT to TAK once targeted SSIDs or MACs are detected by kismet.\n\n-creating a list of targeted SSIDs and MACs can be done in the tgt devices node.\n\n-to stop data flow from websocket/eventbus, use the unsub node.\n\nHOW THE KISMETTAKALERTS WORKS:\n\n-the top flow sends an http GET request to kismets web api that pulls all alerts that kismet has stored from the current active scan but repackages it up into CoT to push to TAKServer or multicast for TAK devices to view.\n\n-the bottom flow is subscribing to certain topics of kismets websocket eventbus (alerts and/or scan messages to detect if targeted devices are present) so when something is detected it will send the data and be repackaged as a CoT in realtime to be pushed to TAKServer or multicast.\n\nTROUBLESHOOTING / KNOWN ISSUES:\n\n-in the event the Node-Red service explodes and you lose connection to the Node-Red UI and cant reconnect, you may need to restart your Node-Red service\n\n$ sudo service node-red restart",
-        "x": 400,
-        "y": 360,
+        "x": 780,
+        "y": 760,
         "wires": []
     },
     {
@@ -545,8 +481,8 @@
         "topic": "",
         "payload": "{\"SUBSCRIBE\": \"MESSAGE\"}",
         "payloadType": "json",
-        "x": 190,
-        "y": 760,
+        "x": 170,
+        "y": 1060,
         "wires": [
             [
                 "c9905570933b6f20"
@@ -574,8 +510,8 @@
         "topic": "",
         "payload": "{\"UNSUBSCRIBE\": \"MESSAGE\"}",
         "payloadType": "json",
-        "x": 220,
-        "y": 800,
+        "x": 200,
+        "y": 1100,
         "wires": [
             [
                 "f7f1216b531d5a95"
@@ -594,7 +530,7 @@
         "finalize": "",
         "libs": [],
         "x": 1050,
-        "y": 780,
+        "y": 1160,
         "wires": [
             [
                 "ca220a3bf037cb57"
@@ -614,7 +550,7 @@
         "property": "payload.ALERT",
         "topi": "topic",
         "x": 870,
-        "y": 640,
+        "y": 1020,
         "wires": [
             [
                 "8a65fd31101c5ecc",
@@ -635,7 +571,7 @@
         "property": "payload.MESSAGE",
         "topi": "topic",
         "x": 890,
-        "y": 780,
+        "y": 1160,
         "wires": [
             [
                 "73eb9b4266337590"
@@ -655,7 +591,7 @@
         "property": "payload.GPS_LOCATION",
         "topi": "topic",
         "x": 890,
-        "y": 820,
+        "y": 1200,
         "wires": [
             [
                 "30e7b4cdf4a9b20e"
@@ -683,7 +619,7 @@
         "reduceInitType": "",
         "reduceFixup": "",
         "x": 1210,
-        "y": 800,
+        "y": 1180,
         "wires": [
             [
                 "591a4734d54a924b",
@@ -695,8 +631,8 @@
         "id": "591a4734d54a924b",
         "type": "debug",
         "z": "1214aeeb5f07994e",
-        "name": "debug join3",
-        "active": true,
+        "name": "debug join4",
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -705,7 +641,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 1370,
-        "y": 880,
+        "y": 1260,
         "wires": []
     },
     {
@@ -720,7 +656,7 @@
         "finalize": "",
         "libs": [],
         "x": 1050,
-        "y": 820,
+        "y": 1200,
         "wires": [
             [
                 "ca220a3bf037cb57"
@@ -745,7 +681,7 @@
         "topic": "topic",
         "outputs": 1,
         "x": 380,
-        "y": 760,
+        "y": 1060,
         "wires": [
             [
                 "67ec10ffa532da35"
@@ -769,8 +705,8 @@
         "bytopic": "all",
         "topic": "topic",
         "outputs": 1,
-        "x": 390,
-        "y": 800,
+        "x": 370,
+        "y": 1100,
         "wires": [
             [
                 "67ec10ffa532da35"
@@ -789,7 +725,7 @@
         "finalize": "",
         "libs": [],
         "x": 1380,
-        "y": 800,
+        "y": 1180,
         "wires": [
             [
                 "cec67b05f084e766",
@@ -801,10 +737,10 @@
         "id": "d2e2b98b78c27c17",
         "type": "comment",
         "z": "1214aeeb5f07994e",
-        "name": "subscribe to alerts (USE THIS ONE)",
+        "name": "subscribe to alerts",
         "info": "will immediately plot a CoT to ATAK if alerts are subscribed to and are detected",
-        "x": 240,
-        "y": 620,
+        "x": 170,
+        "y": 860,
         "wires": []
     },
     {
@@ -813,15 +749,15 @@
         "z": "1214aeeb5f07994e",
         "name": "subscribe to tgt mac/ssids",
         "info": "will immediately plot a CoT to ATAK if mac/ssid are subscribed to and are detected, add in tgt SSIDs and MACs in tgt devices node",
-        "x": 290,
-        "y": 840,
+        "x": 190,
+        "y": 1020,
         "wires": []
     },
     {
         "id": "77c495ed7eb9ecec",
         "type": "debug",
         "z": "1214aeeb5f07994e",
-        "name": "debug cot3",
+        "name": "debug cot4",
         "active": true,
         "tosidebar": true,
         "console": false,
@@ -831,7 +767,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 1590,
-        "y": 880,
+        "y": 1260,
         "wires": []
     },
     {
@@ -841,7 +777,7 @@
         "name": "configure tgt devices",
         "info": "in tgt devices node in \"var tgt = \" add in your SSIDs and MAC addresses formatted the same as the example provided.",
         "x": 1060,
-        "y": 740,
+        "y": 1120,
         "wires": []
     },
     {
@@ -850,18 +786,8 @@
         "z": "1214aeeb5f07994e",
         "name": "config ping",
         "info": "configure ping node and scroll down to repeat and set to interval and input how often you want to update to CoTs to TAK.\nthis ping node will start the flow to send to TAK as CoT all alerts in the event you subscribed to alerts after having had recieved alerts previously.",
-        "x": 140,
-        "y": 140,
-        "wires": []
-    },
-    {
-        "id": "67257e80790cf3a6",
-        "type": "comment",
-        "z": "1214aeeb5f07994e",
-        "name": "configure TCP (TAKServer)",
-        "info": "if using SSL/TLS ensure you upload your certificates, key and input your passphrase.\nCertificates (.pem) and key (.key) can be found in your TAKServers directory where it stores all TAK client certificates.\nDefualt SSL/TLS port is 8089.\n",
-        "x": 1630,
-        "y": 280,
+        "x": 260,
+        "y": 120,
         "wires": []
     },
     {
@@ -870,8 +796,8 @@
         "z": "1214aeeb5f07994e",
         "name": "configure TCP (TAKServer)",
         "info": "if using SSL/TLS ensure you upload your certificates, key and input your passphrase.\nCertificates (.pem) and key (.key) can be found in your TAKServers directory where it stores all TAK client certificates.\nDefualt SSL/TLS port is 8089.\n",
-        "x": 1870,
-        "y": 740,
+        "x": 2270,
+        "y": 1140,
         "wires": []
     },
     {
@@ -880,8 +806,8 @@
         "z": "1214aeeb5f07994e",
         "name": "configure both ws",
         "info": "input kismet device ip addres and username and password login for kismet UI. formatted as ws://username:password@kismetipaddress:2501",
-        "x": 590,
-        "y": 540,
+        "x": 570,
+        "y": 920,
         "wires": []
     },
     {
@@ -890,9 +816,504 @@
         "z": "1214aeeb5f07994e",
         "name": "configure both http",
         "info": "input ip of kismet device into both http nodes",
-        "x": 370,
+        "x": 490,
         "y": 140,
         "wires": []
+    },
+    {
+        "id": "00d5a73c32417978",
+        "type": "ui_switch",
+        "z": "1214aeeb5f07994e",
+        "name": "switch",
+        "label": "kismetTakFlow: Get Alerts",
+        "tooltip": "",
+        "group": "6aa9afc81e0c8c1e",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 110,
+        "y": 240,
+        "wires": [
+            [
+                "1ab6a81f1c03d3bd"
+            ]
+        ]
+    },
+    {
+        "id": "1ab6a81f1c03d3bd",
+        "type": "trigger",
+        "z": "1214aeeb5f07994e",
+        "name": "ping frequency",
+        "op1": "1",
+        "op2": "0",
+        "op1type": "str",
+        "op2type": "str",
+        "duration": "-10",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "false",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 260,
+        "y": 240,
+        "wires": [
+            [
+                "80056a321302c597",
+                "493c66a1c144d68a"
+            ]
+        ]
+    },
+    {
+        "id": "3d26516b291a7c04",
+        "type": "comment",
+        "z": "1214aeeb5f07994e",
+        "name": "(optional UI) configure ping frequency",
+        "info": "in the ping frequency node configure how often you want traccar clients to be updated to TAK",
+        "x": 290,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "f5085cb3cba08017",
+        "type": "ui_button",
+        "z": "1214aeeb5f07994e",
+        "name": "sub",
+        "group": "6aa9afc81e0c8c1e",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "SubscribeAlerts",
+        "tooltip": "subscribes to alerts",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "{\"SUBSCRIBE\": \"ALERT\"}",
+        "payloadType": "json",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 390,
+        "y": 1220,
+        "wires": [
+            [
+                "67ec10ffa532da35",
+                "ae812febf2e1ef2f"
+            ]
+        ]
+    },
+    {
+        "id": "211d0a99c96bf7a0",
+        "type": "ui_button",
+        "z": "1214aeeb5f07994e",
+        "name": "unsub",
+        "group": "6aa9afc81e0c8c1e",
+        "order": 7,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "UnsubscribeAlerts",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "{\"UNSUBSCRIBE\": \"ALERT\"}",
+        "payloadType": "json",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 390,
+        "y": 1260,
+        "wires": [
+            [
+                "67ec10ffa532da35",
+                "ae812febf2e1ef2f"
+            ]
+        ]
+    },
+    {
+        "id": "0ee1e1029a5fa76a",
+        "type": "ui_button",
+        "z": "1214aeeb5f07994e",
+        "name": "sub",
+        "group": "6aa9afc81e0c8c1e",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "SubscribeTargets",
+        "tooltip": "subscribes to targets",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "{\"SUBSCRIBE\": \"MESSAGES\"}",
+        "payloadType": "json",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 250,
+        "y": 1300,
+        "wires": [
+            [
+                "abdfac435baf9df7"
+            ]
+        ]
+    },
+    {
+        "id": "923c0424199b42b0",
+        "type": "ui_button",
+        "z": "1214aeeb5f07994e",
+        "name": "unsub",
+        "group": "6aa9afc81e0c8c1e",
+        "order": 7,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "UnsubscribeTargets",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "{\"UNSUBSCRIBE\": \"MESSAGES\"}",
+        "payloadType": "json",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 250,
+        "y": 1340,
+        "wires": [
+            [
+                "6ff253d4420bd655"
+            ]
+        ]
+    },
+    {
+        "id": "abdfac435baf9df7",
+        "type": "trigger",
+        "z": "1214aeeb5f07994e",
+        "name": "sub",
+        "op1": "",
+        "op2": "{\"SUBSCRIBE\":\"GPS_LOCATION\"}",
+        "op1type": "pay",
+        "op2type": "json",
+        "duration": "500",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 390,
+        "y": 1300,
+        "wires": [
+            [
+                "67ec10ffa532da35",
+                "ae812febf2e1ef2f"
+            ]
+        ]
+    },
+    {
+        "id": "6ff253d4420bd655",
+        "type": "trigger",
+        "z": "1214aeeb5f07994e",
+        "name": "unsub",
+        "op1": "",
+        "op2": "{\"UNSUBSCRIBE\":\"GPS_LOCATION\"}",
+        "op1type": "pay",
+        "op2type": "json",
+        "duration": "500",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 390,
+        "y": 1340,
+        "wires": [
+            [
+                "67ec10ffa532da35",
+                "ae812febf2e1ef2f"
+            ]
+        ]
+    },
+    {
+        "id": "ae812febf2e1ef2f",
+        "type": "debug",
+        "z": "1214aeeb5f07994e",
+        "name": "debug sub/unsub",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 1340,
+        "wires": []
+    },
+    {
+        "id": "658c733206d8021b",
+        "type": "comment",
+        "z": "1214aeeb5f07994e",
+        "name": "http://node-red-ip-address:1880/ui",
+        "info": "",
+        "x": 240,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "576b0d3c1250a3c3",
+        "type": "inject",
+        "z": "1214aeeb5f07994e",
+        "name": "ping",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 250,
+        "y": 500,
+        "wires": [
+            [
+                "d861cb5e3d074049"
+            ]
+        ]
+    },
+    {
+        "id": "d861cb5e3d074049",
+        "type": "http request",
+        "z": "1214aeeb5f07994e",
+        "name": "http req (kismet)",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://10.0.0.185:2501/gps/location.json",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "basic",
+        "senderr": false,
+        "headers": [],
+        "x": 500,
+        "y": 460,
+        "wires": [
+            [
+                "ce1e97599ee5f9dd"
+            ]
+        ]
+    },
+    {
+        "id": "ce1e97599ee5f9dd",
+        "type": "json",
+        "z": "1214aeeb5f07994e",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 670,
+        "y": 460,
+        "wires": [
+            [
+                "68c34e98cb0d38d0",
+                "747db322f3b62748"
+            ]
+        ]
+    },
+    {
+        "id": "68c34e98cb0d38d0",
+        "type": "function",
+        "z": "1214aeeb5f07994e",
+        "name": "kismet json (position)",
+        "func": "const short = 10000;\nconst cinco = 5 * 60 * 1000;\nconst diez = 2 * cinco;\nconst stale = new Date(Date.now() + diez).toISOString();\n\nvar name = \"kismet\"\nvar color = \"-65536\";\nvar lat = String(msg.payload[\"kismet.common.location.geopoint\"][1]);\nvar lon = String(msg.payload[\"kismet.common.location.geopoint\"][0]);\n//var alt = \n\nmsg.payload = {\n    \"event\": {\n        \"_attributes\": {\n            \"version\": \"2.0\",\n            \"uid\": \"\"+ name +\"\",\n            \"type\": \"a-u-G\",\n            \"how\": \"h-g-i-g-o\",\n            \"time\": new Date(Date.now()).toISOString(),\n            \"start\": new Date(Date.now()).toISOString(),\n            \"stale\": stale,\n        },\n        \"point\": {\n            \"_attributes\": {\n                \"lat\": \"\"+ lat +\"\",\n                \"lon\": \"\"+ lon + \"\",\n                \"hae\": \"0.0\",\n                \"ce\": \"9999999.0\",\n                \"le\": \"9999999.0\"\n            }\n        },\n        \"detail\": {\n            \"usericon\": {\n                \"_attributes\": {\n                    \"iconsetpath\": \"COT_MAPPING_SPOTMAP/b-m-p-s-m/\"+ color +\"\",\n                },\n            },\n            \"contact\": {\n                \"_attributes\": {\n                \"callsign\": \"\"+ name +\"\",\n                }\n            },\n            /* \"__group\": {\n                \"_attributes\": {\n                \"role\": \"Team Member\",\n                \"name\": \"Red\",\n                }\n            }, */\n            \"color\": {\n                \"_attributes\": {\n                \"argb\": \"\"+ color +\"\",\n                \"test\": \"test\",\n                },\n            },\n        }\n    }\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 880,
+        "y": 460,
+        "wires": [
+            [
+                "02a2cee9e7659937",
+                "cec67b05f084e766"
+            ]
+        ]
+    },
+    {
+        "id": "747db322f3b62748",
+        "type": "debug",
+        "z": "1214aeeb5f07994e",
+        "name": "debug json2",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 830,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "02a2cee9e7659937",
+        "type": "debug",
+        "z": "1214aeeb5f07994e",
+        "name": "debug cot2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1090,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "7e30854f19970de6",
+        "type": "comment",
+        "z": "1214aeeb5f07994e",
+        "name": "configure gps ping",
+        "info": "configure ping node and scroll down to repeat and set to interval and input how often you want to update to CoTs to TAK.",
+        "x": 230,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "2e25fc6def1c08ea",
+        "type": "comment",
+        "z": "1214aeeb5f07994e",
+        "name": "configure http req",
+        "info": "input your ip of the device running kismet, default port is 2501, input your basic auth username and password that was setup when you first started and logged in to the kismet gui",
+        "x": 530,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "7bd6200db25d085a",
+        "type": "ui_switch",
+        "z": "1214aeeb5f07994e",
+        "name": "switch",
+        "label": "kismetTakFlow: Get Location",
+        "tooltip": "",
+        "group": "6aa9afc81e0c8c1e",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 110,
+        "y": 560,
+        "wires": [
+            [
+                "1e027be9236197d5"
+            ]
+        ]
+    },
+    {
+        "id": "1e027be9236197d5",
+        "type": "trigger",
+        "z": "1214aeeb5f07994e",
+        "name": "ping frequency",
+        "op1": "1",
+        "op2": "0",
+        "op1type": "str",
+        "op2type": "str",
+        "duration": "-10",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "false",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 260,
+        "y": 560,
+        "wires": [
+            [
+                "d861cb5e3d074049"
+            ]
+        ]
+    },
+    {
+        "id": "b2f7dedb91ecf2f3",
+        "type": "comment",
+        "z": "1214aeeb5f07994e",
+        "name": "(optional UI) configure ping frequency",
+        "info": "in the ping frequency node configure how often you want traccar clients to be updated to TAK",
+        "x": 290,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "a305c283e2a507ec",
+        "type": "comment",
+        "z": "1214aeeb5f07994e",
+        "name": "http://node-red-ip-address:1880/ui",
+        "info": "",
+        "x": 220,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "3f871dc4f04bb293",
+        "type": "websocket-client",
+        "path": "ws://pi:raspberry@10.0.0.185:2501/eventbus/events.ws",
+        "tls": "",
+        "wholemsg": "false",
+        "hb": "0",
+        "subprotocol": ""
     },
     {
         "id": "1c52b35895c06e7e",
@@ -909,12 +1330,21 @@
         "alpnprotocol": ""
     },
     {
-        "id": "3f871dc4f04bb293",
-        "type": "websocket-client",
-        "path": "ws://pi:raspberry@10.0.0.185:2501/eventbus/events.ws",
-        "tls": "",
-        "wholemsg": "false",
-        "hb": "0",
-        "subprotocol": ""
+        "id": "6aa9afc81e0c8c1e",
+        "type": "ui_group",
+        "name": "Default",
+        "tab": "fb24101741062f74",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "fb24101741062f74",
+        "type": "ui_tab",
+        "name": "Tab 1",
+        "icon": "dashboard",
+        "order": 1
     }
 ]
