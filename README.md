@@ -1,5 +1,5 @@
-# kismetTakAlerts
-Node-Red Flow to forward Kismet Alerts (as CoT icon) to ATAK via multicast or TAKServer. (used in conjunction with Ampledatas node-red-contrib-tak)
+# kismetTakFlow
+Node-Red Flow to forward Kismet Alerts and/or GPS location (as CoT icon) to ATAK via multicast or TAKServer. (used in conjunction with Ampledatas node-red-contrib-tak)
 
 ![flow](/kismetTakAlerts.png?raw=true "Node Red Flow")
 
@@ -23,19 +23,19 @@ SETUP NODE-RED:
 
 -options include installing node-red on your local PC, a Raspberry Pi or similar single board computer or mini PC, deploying node-red on a cloud server or virtual private server (VPS), Docker Container, or local virtual environment. After installing node-red you should be able to go to the node-red dashboard at http://*nodeRedIPaddress:1880 you may have to open appropriate ports (1880) to allow devices to access the node-red dashboard.
 
--ensure you install the "node-red-contrib-tak" node. If not there should be a prompt when you import wigleTakFlow in Node-Red that there are nodes that need to be installed and will automatically install them for you if you allow. In the event that isnt the case, in Node-Red: Menu (3 horizontal lines) > Manage palette > Install > Search "node-red-contrib-tak" > Install > Install
+-ensure you install the "node-red-contrib-tak" node. If not there should be a prompt when you import kismetTakFlow in Node-Red that there are nodes that need to be installed and will automatically install them for you if you allow. In the event that isnt the case, in Node-Red: Menu (3 horizontal lines) > Manage palette > Install > Search "node-red-contrib-tak" > Install > Install
 
 -----------------------------
 
 IMPORT .JSON FLOW TO NODE RED:
 
--in GitHub: click on "kismetTakAlerts.json" > click on the download icon "Download raw file" > note where the "kismetTakAlerts.json" file downloaded to, default is in your Downloads folder.
+-in GitHub: click on "kismetTakFlow.json" > click on the download icon "Download raw file" > note where the "kismetTakFlow.json" file downloaded to, default is in your Downloads folder.
 
--in Node-Red: click on menu icon (3 horizontal lines top right) > click on "Import" > click on "select a file to import" > go to Downloads folder and click on "kismetTakAlerts.json" > Upload > Import
+-in Node-Red: click on menu icon (3 horizontal lines top right) > click on "Import" > click on "select a file to import" > go to Downloads folder and click on "kismetTakFlow.json" > Upload > Import
 
 ALTERNATIVELY..
 
--you can just copy the whole "kismetTakAlerts.json" code from GitHub and paste it into the Node-Red Import Clipboard.
+-you can just copy the whole "kismetTakFlow.json" code from GitHub and paste it into the Node-Red Import Clipboard.
 
 -------------------------------
 
@@ -43,7 +43,7 @@ CONFIGURE TAKSERVER:
 
 -TAKServer can be hosted on various platforms: Raspberry Pi, Mini PCs, your local PC, Cloud Servers or Virtual Private Servers (VPS), Docker Containers, or Virtual Environments. Regardless, if you're looking for instructions on setting up your TAKServer I recommend ATAKHQs guides https://www.atakhq.com/en/tak-server.
 
--Configuring the TCP (TAKServer) node in Node-Red kismetTakAlerts, Input your TAKServer IP and Port, and checkbox whether you're using SSL/TLS or not. If you are using SSL/TLS, ensure you upload you TAKServer certificates and key that are located in the directory of your TAKServer that stores all client certificates/keys (ie: ubuntu docker container is "/opt/tak/certs/files"). I Suggest creating a TAK client "node-red" to be used specifically for Node-Reds handling of forwarding data to TAK. In your certificates file you will want to copy and upload "node-red.pem" as the "Certificate", "node-red.key" as the "Private Key" and "ca.pem" as the "CA Certificate" in the TLS Configuration Properties in the TCP (TAKServer) node in Node-Red. You will also need to enter the Passphrase for your TAKServer truststore, this can be found in your TAKServers CoreConfig.xml file. Default is "atakatak".
+-Configuring the TCP (TAKServer) node in Node-Red kismetTakFlow, Input your TAKServer IP and Port, and checkbox whether you're using SSL/TLS or not. If you are using SSL/TLS, ensure you upload you TAKServer certificates and key that are located in the directory of your TAKServer that stores all client certificates/keys (ie: ubuntu docker container is "/opt/tak/certs/files"). I Suggest creating a TAK client "node-red" to be used specifically for Node-Reds handling of forwarding data to TAK. In your certificates file you will want to copy and upload "node-red.pem" as the "Certificate", "node-red.key" as the "Private Key" and "ca.pem" as the "CA Certificate" in the TLS Configuration Properties in the TCP (TAKServer) node in Node-Red. You will also need to enter the Passphrase for your TAKServer truststore, this can be found in your TAKServers CoreConfig.xml file. Default is "atakatak".
 
 ----------------------------------
 
@@ -61,7 +61,7 @@ CONFIGURE BOTH HTTP NODES:
 
 CONFIGURE BOTH WS (IN/OUT) NODES:
 
--in Node-Red: input your login credentials for kismet device followed by IP address and port (default port is 2501). ie: ws://username:password@kismetipaddress:2501
+-in Node-Red: input your login credentials for kismet device followed by IP address and port (default port is 2501). ie: ws://username:password@kismet-ip-address:2501
 
 -----------------------------------
 
@@ -71,7 +71,7 @@ CONFIGURE TGT DEVICES:
 
 ------------------------------------
 
-USING THE KISMETTAKALERTS:
+USING THE KISMETTAKFLOW:
 
 -short answer: make sure kismets UI is actively running and just click "sub alert" in the flow.
 
@@ -88,11 +88,15 @@ USING THE KISMETTAKALERTS:
 
 ------------------------------------
 
-HOW THE KISMETTAKALERTS WORKS:
+HOW THE KISMETTAKFLOW WORKS:
 
 -the top flow sends an http GET request to kismets web api that pulls all alerts that kismet has stored from the current active scan but repackages it up into CoT to push to TAKServer or multicast for TAK devices to view.
 
+-the mid flow sends Kismets GPS Location to TAK in configured intervals to be used for device tracking.
+
 -the bottom flow is subscribing to certain topics of kismets websocket eventbus (alerts and/or scan messages to detect if targeted devices are present) so when something is detected it will send the data and be repackaged as a CoT in realtime to be pushed to TAKServer or multicast.
+
+-all features in the kismetTakFlow can be subscribed and toggled in the Node-Red UI (http://node-red-ip-address:1880/ui), the ping interval frequency still needs to be configured in the node-red dashboard.
 
 --------------------------------------
 
