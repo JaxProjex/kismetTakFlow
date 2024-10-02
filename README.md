@@ -1,5 +1,7 @@
 # kismetTakFlow
-Node-Red Flow to forward Kismet Alerts and/or GPS location (as CoT icon) to ATAK via multicast or TAKServer. (used in conjunction with Ampledatas node-red-contrib-tak)
+Node-Red Flow to forward Kismet Alerts and/or GPS location (as CoT icon) to ATAK via multicast or TAKServer. (used in conjunction with Ampledatas node-red-contrib-tak).
+
+*it is recommended to use kismetAtakCompanion (kismet web plugin) over kismetTakFlow!
 
 ![flow](/kismetTakFlow.png?raw=true "Node Red Flow")
 
